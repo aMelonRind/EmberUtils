@@ -4,7 +4,9 @@ import io.github.amelonrind.emberutils.config.Config;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
@@ -12,6 +14,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Language;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -64,10 +67,10 @@ public class MixinItemStack {
     @Unique
     private boolean isMmoItem() {
         if (isMmoItem == null) {
-            if (nbt != null && nbt.contains("display", 10)) {
+            if (nbt != null && nbt.contains("display", NbtElement.COMPOUND_TYPE)) {
                 NbtCompound nbtCompound = this.nbt.getCompound("display");
-                if (nbtCompound.getType("Lore") == 9) {
-                    NbtList nbtList = nbtCompound.getList("Lore", 8);
+                if (nbtCompound.getType("Lore") == NbtElement.LIST_TYPE) {
+                    NbtList nbtList = nbtCompound.getList("Lore", NbtElement.STRING_TYPE);
                     int size = nbtList.size();
                     if (size > 1) {
                         String string = nbtList.getString(size - 2);
@@ -167,6 +170,40 @@ public class MixinItemStack {
 
                 tooltip.add(func.apply(text));
             });
+        }
+    }
+
+    @Unique
+    private Integer barStep = null;
+    @Unique
+    private Integer barColor = null;
+
+    @Inject(method = "isItemBarVisible", at = @At("RETURN"), cancellable = true)
+    private void hasMmoDurability(CallbackInfoReturnable<Boolean> cir) {
+        if (cir.getReturnValueZ() || !Config.get().durabilityDisplayFix) return;
+        if (nbt != null && nbt.contains("MMOITEMS_DURABILITY", NbtElement.INT_TYPE) && nbt.contains("MMOITEMS_MAX_DURABILITY", NbtElement.INT_TYPE)) {
+            int dur = nbt.getInt("MMOITEMS_DURABILITY");
+            int max = nbt.getInt("MMOITEMS_MAX_DURABILITY");
+            barStep = Math.round(dur * 13.0F / max);
+            float h = Math.max(0.0F, (float) dur / max);
+            barColor = MathHelper.hsvToRgb(h / 3.0F, 1.0F, 1.0F);
+            if (dur < max) cir.setReturnValue(true);
+        }
+    }
+
+    @Inject(method = "getItemBarStep", at = @At("HEAD"), cancellable = true)
+    private void overrideBarStep(CallbackInfoReturnable<Integer> cir) {
+        if (barStep != null) {
+            cir.setReturnValue(barStep);
+            barStep = null;
+        }
+    }
+
+    @Inject(method = "getItemBarColor", at = @At("HEAD"), cancellable = true)
+    private void overrideBarColor(CallbackInfoReturnable<Integer> cir) {
+        if (barColor != null) {
+            cir.setReturnValue(barColor);
+            barColor = null;
         }
     }
 
