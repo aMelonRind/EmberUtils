@@ -14,9 +14,6 @@ public class EmberUtils implements ClientModInitializer {
         return Text.translatable(MOD_ID + "." + key);
     }
 
-    /**
-     * Runs the mod initializer.
-     */
     @Override
     public void onInitializeClient() {
         // nothing here for now
