@@ -53,7 +53,10 @@ public class ModMenuApiImpl implements ModMenuApi {
                             .option(optionOf("centeredItemNameBackground", () -> cfg.centeredItemNameBackground, val -> cfg.centeredItemNameBackground = val))
                             .option(optionOf("prettierItemName", () -> cfg.prettierItemName, val -> cfg.prettierItemName = val))
                             .option(optionOf("runeTooltip", () -> cfg.runeTooltip, val -> cfg.runeTooltip = val))
-                            .option(optionOf("keepChat", () -> cfg.keepChat, val -> cfg.keepChat = val))
+                            .option(optionOf("keepChat", () -> cfg.keepChat, val -> {
+                                EmberUtils.isClearingChatWithF3D = false;
+                                cfg.keepChat = val;
+                            }))
                             .build())
                     .save(Config.HANDLER::save)
                     .build()
