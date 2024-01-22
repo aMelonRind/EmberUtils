@@ -36,7 +36,7 @@ public class Config {
     public boolean prettierItemName = true;
 
     @SerialEntry(comment = "Reveals runes on MMOItems' tooltip.")
-    public boolean runeTooltip = true;
+    public boolean gemstoneTooltip = true;
 
     @SerialEntry(comment = "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D.")
     public boolean keepChat = true;

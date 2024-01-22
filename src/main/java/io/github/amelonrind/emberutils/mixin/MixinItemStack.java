@@ -1,12 +1,16 @@
 package io.github.amelonrind.emberutils.mixin;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.github.amelonrind.emberutils.config.Config;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
@@ -47,7 +51,6 @@ public class MixinItemStack {
     private static final String prefix = "\uEA6E 뀁 \uEA72\uEA6F\uEA6E\uEA6C";
     @Unique
     private static final String prefixChar = "뀁";
-
     @Unique
     private static final String prefix1 = "\uEA6E ";
     @Unique
@@ -56,6 +59,8 @@ public class MixinItemStack {
     private static final String charsFrom = "뀎뀈뀑뀅뀂뀋";
     @Unique
     private static final String charsTo = "뀍뀇뀐뀄뀀뀊";
+    @Unique
+    private static final String appliedGemstoneText = "\uEA6E 뀁 \uEA72\uEA6F\uEA6E\uEA6C♦ 已鑲嵌";
     @Shadow
     @Nullable
     private NbtCompound nbt;
@@ -205,6 +210,42 @@ public class MixinItemStack {
             cir.setReturnValue(barColor);
             barColor = null;
         }
+    }
+
+    @Inject(method = "getTooltip", at = @At("RETURN"))
+    private void revealRunes(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
+        if (!Config.get().gemstoneTooltip) return;
+        if (nbt == null || !nbt.contains("MMOITEMS_GEM_STONES", NbtElement.STRING_TYPE)) return;
+        try {
+            JsonArray gemstones = JsonParser.parseString(nbt.getString("MMOITEMS_GEM_STONES"))
+                    .getAsJsonObject().get("Gemstones").getAsJsonArray();
+            if (gemstones.isEmpty()) return;
+            List<Text> tooltip = cir.getReturnValue();
+            int size = tooltip.size();
+
+            int startIndex = 0;
+            while (startIndex < size) {
+                if (tooltip.get(startIndex).getString().equals(appliedGemstoneText)) break;
+                startIndex++;
+            }
+            if (startIndex == size) return;
+            int endIndex = startIndex + 1;
+            int limit = Math.min(size, startIndex + gemstones.size() + 1);
+            while (endIndex < limit) {
+                if (!tooltip.get(endIndex).getString().equals(appliedGemstoneText)) break;
+                endIndex++;
+            }
+            if (endIndex - startIndex != gemstones.size()) return;
+            size = gemstones.size();
+            for (int i = 0; i < size; i++) {
+                JsonObject gemstone = gemstones.get(i).getAsJsonObject();
+                String name = gemstone.get("Name").getAsString();
+                String color = gemstone.get("Color").getAsString();
+                if (name.startsWith(prefix2, 5)) name = name.substring(10);
+                color = "§" + color.charAt(1);
+                tooltip.set(startIndex + i, Text.literal(prefix + color + "[§f" + name + color + "]"));
+            }
+        } catch (Exception ignore) {}
     }
 
 }

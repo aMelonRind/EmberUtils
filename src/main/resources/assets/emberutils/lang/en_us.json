@@ -11,8 +11,8 @@
   "emberutils.settings.centeredItemNameBackground.description": "Center the MMOItems name background on above hotbar. Will override MMOItem name fix.",
   "emberutils.settings.prettierItemName": "Prettier item name",
   "emberutils.settings.prettierItemName.description": "Fixes MMOItems that has previously took out from an anvil which will lose name background.",
-  "emberutils.settings.runeTooltip": "Rune tooltip",
-  "emberutils.settings.runeTooltip.description": "Reveals runes on MMOItems' tooltip.",
+  "emberutils.settings.gemstoneTooltip": "Gemstone tooltip",
+  "emberutils.settings.gemstoneTooltip.description": "Reveals gemstones on MMOItems' tooltip.",
   "emberutils.settings.keepChat": "Keep chat",
   "emberutils.settings.keepChat.description": "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D."
 }
