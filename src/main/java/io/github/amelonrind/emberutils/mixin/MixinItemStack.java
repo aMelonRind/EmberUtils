@@ -77,18 +77,13 @@ public class MixinItemStack {
                 if (nbtCompound.getType("Lore") == NbtElement.LIST_TYPE) {
                     NbtList nbtList = nbtCompound.getList("Lore", NbtElement.STRING_TYPE);
                     int size = nbtList.size();
-                    if (size > 1) {
-                        String string = nbtList.getString(size - 2);
-                        try {
-                            MutableText text = Text.Serialization.fromJson(string);
-                            if (text != null && text.getString().startsWith(prefix)) {
-                                isMmoItem = true;
-                            }
-                        } catch (Exception ignore) {}
-                        if (isMmoItem) try {
-                            MutableText text = Text.Serialization.fromJson(string);
-                            if (text != null) {
-                                Optional<String> start = text.visit(Optional::of);
+                    if (size > 1) try {
+                        MutableText text = Text.Serialization.fromJson(nbtList.getString(size - 2));
+                        if (text != null && text.getString().startsWith(prefix)) {
+                            isMmoItem = true;
+                            MutableText text2 = Text.Serialization.fromJson(nbtList.getString(size - 1));
+                            if (text2 != null) {
+                                Optional<String> start = text2.visit(Optional::of);
                                 if (start.isPresent()) {
                                     String str = start.get();
                                     if (str.length() >= 3) {
@@ -99,8 +94,8 @@ public class MixinItemStack {
                                     }
                                 }
                             }
-                        } catch (Exception ignore) {}
-                    }
+                        }
+                    } catch (Exception ignore) {}
                 }
             }
             if (isMmoItem == null) isMmoItem = false;
@@ -132,7 +127,11 @@ public class MixinItemStack {
             }, Style.EMPTY);
             text = t;
         }
-        cir.setReturnValue(Text.literal(prefix1 + namePrefix + prefix2).append(text));
+        cir.setReturnValue(Text.empty()
+                .append(Text.literal(prefix1 + namePrefix + prefix2)
+                        .setStyle(Style.EMPTY.withItalic(false).withColor(0xFFFFFF)))
+                .append(text)
+        );
     }
 
     @ModifyArgs(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendEnchantments(Ljava/util/List;Lnet/minecraft/nbt/NbtList;)V"))
@@ -243,7 +242,7 @@ public class MixinItemStack {
                 String color = gemstone.get("Color").getAsString();
                 if (name.startsWith(prefix2, 5)) name = name.substring(10);
                 color = "§" + color.charAt(1);
-                tooltip.set(startIndex + i, Text.literal(prefix + color + "[§f" + name + color + "]"));
+                tooltip.set(startIndex + i, Text.literal(prefix + color + "<§f" + name + color + ">"));
             }
         } catch (Exception ignore) {}
     }

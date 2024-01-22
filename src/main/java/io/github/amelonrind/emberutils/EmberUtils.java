@@ -1,5 +1,6 @@
 package io.github.amelonrind.emberutils;
 
+import io.github.amelonrind.emberutils.config.Config;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -18,7 +19,7 @@ public class EmberUtils implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // nothing here for now
+        Config.HANDLER.load();
     }
 
 }

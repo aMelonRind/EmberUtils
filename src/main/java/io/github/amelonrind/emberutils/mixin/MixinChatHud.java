@@ -22,7 +22,7 @@ public class MixinChatHud {
     @Unique
     private static final List<String> chars = List.of("뀍", "뀇", "뀐", "뀄", "뀀", "뀊");
     @Unique
-    private static final Pattern pattern = Pattern.compile("[뀍뀇뀐뀄뀀뀊]");
+    private static final Pattern pattern = Pattern.compile("(?:\uEA6E )?[뀍뀇뀐뀄뀀뀊](?: \uEA72\uEA6F\uEA6E\uEA6C)?");
 
     @ModifyVariable(
             method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V",

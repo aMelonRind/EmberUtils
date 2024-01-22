@@ -20,7 +20,7 @@ public class Config {
         return HANDLER.instance();
     }
 
-    @SerialEntry(comment = "Fixes tooltip texture on enchantments on MMOItems.")
+    @SerialEntry(comment = "Fixes tooltip texture on enchantments.")
     public boolean enchantmentTooltipFix = true;
 
     @SerialEntry(comment = "Show durability on not damageable item in vanilla.")
@@ -29,7 +29,7 @@ public class Config {
     @SerialEntry(comment = "Fixes item name carrying tooltip background in chat or above hotbar.")
     public boolean mmoItemNameFix = true;
 
-    @SerialEntry(comment = "Center the MMOItems name background on above hotbar. Will override mmoItemNameFix.")
+    @SerialEntry(comment = "Center the MMOItems name background on the tooltip above hotbar. Will override mmoItemNameFix.")
     public boolean centeredItemNameBackground = true;
 
     @SerialEntry(comment = "Fixes MMOItems that has previously took out from an anvil which will lose name background.")

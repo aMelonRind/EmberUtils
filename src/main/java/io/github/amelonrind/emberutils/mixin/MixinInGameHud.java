@@ -59,9 +59,11 @@ public class MixinInGameHud {
                 return Optional.empty();
             }, Style.EMPTY);
             args.set(1, t);
+            TextRenderer tr = args.get(0);
+            args.set(2, (int) args.get(2) + (tr.getWidth(text) - tr.getWidth(t)) / 2);
 
             if (cfg.centeredItemNameBackground) {
-                context.drawText(args.get(0), String.valueOf(startStr.charAt(2)), (scaledWidth - 160) / 2, args.get(3), args.get(4), false);
+                context.drawText(tr, String.valueOf(startStr.charAt(2)), (scaledWidth - 161) / 2, args.get(3), args.get(4), false);
             }
         }
     }
