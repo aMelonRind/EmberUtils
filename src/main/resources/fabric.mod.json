@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "emberutils",
+  "version": "${version}",
+  "name": "EmberUtils",
+  "description": "Some client modifications for EmberCraft server.",
+  "authors": [
+    "aMelonRind"
+  ],
+  "contact": {
+    "repo": "https://github.com/aMelonRind/EmberUtils"
+  },
+  "license": "MIT",
+  "icon": "assets/emberutils/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "io.github.amelonrind.emberutils.EmberUtils"
+    ]
+  },
+  "mixins": [
+    "emberutils.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}
