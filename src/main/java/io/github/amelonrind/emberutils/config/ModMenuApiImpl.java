@@ -48,6 +48,7 @@ public class ModMenuApiImpl implements ModMenuApi {
                     .category(ConfigCategory.createBuilder()
                             .name(translatable("category"))
                             .option(optionOf("enchantmentTooltipFix", () -> cfg.enchantmentTooltipFix, val -> cfg.enchantmentTooltipFix = val))
+                            .option(optionOf("durabilityDisplayFix", () -> cfg.durabilityDisplayFix, val -> cfg.durabilityDisplayFix = val))
                             .option(optionOf("mmoItemNameFix", () -> cfg.mmoItemNameFix, val -> cfg.mmoItemNameFix = val))
                             .option(optionOf("centeredItemNameBackground", () -> cfg.centeredItemNameBackground, val -> cfg.centeredItemNameBackground = val))
                             .option(optionOf("prettierItemName", () -> cfg.prettierItemName, val -> cfg.prettierItemName = val))

@@ -3,6 +3,8 @@
   "emberutils.settings.category": "Settings",
   "emberutils.settings.enchantmentTooltipFix": "Enchantment tooltip fix",
   "emberutils.settings.enchantmentTooltipFix.description": "Fixes tooltip texture on enchantments on MMOItems.",
+  "emberutils.settings.durabilityDisplayFix": "Durability display fix",
+  "emberutils.settings.durabilityDisplayFix.description": "Show durability on not damageable item in vanilla.",
   "emberutils.settings.mmoItemNameFix": "MMOItem name fix",
   "emberutils.settings.mmoItemNameFix.description": "Fixes item name carrying tooltip background in chat or above hotbar.",
   "emberutils.settings.centeredItemNameBackground": "Centered item name background",

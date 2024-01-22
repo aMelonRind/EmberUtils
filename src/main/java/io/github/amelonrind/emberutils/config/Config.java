@@ -23,6 +23,9 @@ public class Config {
     @SerialEntry(comment = "Fixes tooltip texture on enchantments on MMOItems.")
     public boolean enchantmentTooltipFix = true;
 
+    @SerialEntry(comment = "Show durability on not damageable item in vanilla.")
+    public boolean durabilityDisplayFix = true;
+
     @SerialEntry(comment = "Fixes item name carrying tooltip background in chat or above hotbar.")
     public boolean mmoItemNameFix = true;
 
