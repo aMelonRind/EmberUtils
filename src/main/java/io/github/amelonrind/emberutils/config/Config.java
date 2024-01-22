@@ -26,7 +26,7 @@ public class Config {
     @SerialEntry(comment = "Fixes item name carrying tooltip background in chat or above hotbar.")
     public boolean mmoItemNameFix = true;
 
-    @SerialEntry(comment = "Center the MMOItems name background on above hotbar.")
+    @SerialEntry(comment = "Center the MMOItems name background on above hotbar. Will override mmoItemNameFix.")
     public boolean centeredItemNameBackground = true;
 
     @SerialEntry(comment = "Fixes MMOItems that has previously took out from an anvil which will lose name background.")

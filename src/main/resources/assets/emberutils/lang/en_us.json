@@ -6,7 +6,7 @@
   "emberutils.settings.mmoItemNameFix": "MMOItem name fix",
   "emberutils.settings.mmoItemNameFix.description": "Fixes item name carrying tooltip background in chat or above hotbar.",
   "emberutils.settings.centeredItemNameBackground": "Centered item name background",
-  "emberutils.settings.centeredItemNameBackground.description": "Center the MMOItems name background on above hotbar.",
+  "emberutils.settings.centeredItemNameBackground.description": "Center the MMOItems name background on above hotbar. Will override MMOItem name fix.",
   "emberutils.settings.prettierItemName": "Prettier item name",
   "emberutils.settings.prettierItemName.description": "Fixes MMOItems that has previously took out from an anvil which will lose name background.",
   "emberutils.settings.runeTooltip": "Rune tooltip",

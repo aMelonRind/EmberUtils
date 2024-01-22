@@ -6,6 +6,8 @@
   "mixins": [
   ],
   "client": [
+    "MixinChatHud",
+    "MixinInGameHud",
     "MixinItemStack"
   ],
   "injectors": {
