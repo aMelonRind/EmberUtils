@@ -8,6 +8,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Language;
@@ -16,12 +17,16 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
 @Mixin(ItemStack.class)
@@ -39,17 +44,27 @@ public class MixinItemStack {
     private static final String prefix = "\uEA6E 뀁 \uEA72\uEA6F\uEA6E\uEA6C";
     @Unique
     private static final String prefixChar = "뀁";
+
+    @Unique
+    private static final String prefix1 = "\uEA6E ";
+    @Unique
+    private static final String prefix2 = " \uEA72\uEA6F\uEA6E\uEA6C";
+    @Unique
+    private static final String charsFrom = "뀎뀈뀑뀅뀂뀋";
+    @Unique
+    private static final String charsTo = "뀍뀇뀐뀄뀀뀊";
     @Shadow
     @Nullable
     private NbtCompound nbt;
     @Unique
     private Boolean isMmoItem = null;
+    @Unique
+    private String namePrefix = null;
 
     @Unique
     private boolean isMmoItem() {
         if (isMmoItem == null) {
-            assert nbt != null;
-            if (nbt.contains("display", 10)) {
+            if (nbt != null && nbt.contains("display", 10)) {
                 NbtCompound nbtCompound = this.nbt.getCompound("display");
                 if (nbtCompound.getType("Lore") == 9) {
                     NbtList nbtList = nbtCompound.getList("Lore", 8);
@@ -62,12 +77,54 @@ public class MixinItemStack {
                                 isMmoItem = true;
                             }
                         } catch (Exception ignore) {}
+                        if (isMmoItem) try {
+                            MutableText text = Text.Serialization.fromJson(string);
+                            if (text != null) {
+                                Optional<String> start = text.visit(Optional::of);
+                                if (start.isPresent()) {
+                                    String str = start.get();
+                                    if (str.length() >= 3) {
+                                        int index = charsFrom.indexOf(str.charAt(2));
+                                        if (index != -1) {
+                                            namePrefix = String.valueOf(charsTo.charAt(index));
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (Exception ignore) {}
                     }
                 }
             }
             if (isMmoItem == null) isMmoItem = false;
         }
         return isMmoItem;
+    }
+
+    @Inject(method = "getName", at = @At("RETURN"), cancellable = true)
+    private void getName(CallbackInfoReturnable<Text> cir) {
+        if (!Config.get().prettierItemName || !isMmoItem() || namePrefix == null) return;
+        Text text = cir.getReturnValue();
+        Optional<String> start = text.visit(Optional::of);
+        if (start.isEmpty()) return;
+        String startStr = start.get();
+        if (startStr.contains(namePrefix)) return;
+        if (startStr.startsWith(" ")) {
+            AtomicBoolean isFirst = new AtomicBoolean(true);
+            MutableText t = Text.empty();
+            text.visit((style, str) -> {
+                if (isFirst.get()) {
+                    try {
+                        t.append(Text.literal(str.stripLeading()).setStyle(style));
+                    } catch (IndexOutOfBoundsException ignore) {}
+                    isFirst.set(false);
+                } else {
+                    t.append(Text.literal(str).setStyle(style));
+                }
+                return Optional.empty();
+            }, Style.EMPTY);
+            text = t;
+        }
+        cir.setReturnValue(Text.literal(prefix1 + namePrefix + prefix2).append(text));
     }
 
     @ModifyArgs(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendEnchantments(Ljava/util/List;Lnet/minecraft/nbt/NbtList;)V"))
