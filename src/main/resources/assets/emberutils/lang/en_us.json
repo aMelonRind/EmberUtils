@@ -1,0 +1,16 @@
+{
+  "emberutils.settings.title": "EmberUtils Config",
+  "emberutils.settings.category": "Settings",
+  "emberutils.settings.enchantmentTooltipFix": "Enchantment tooltip fix",
+  "emberutils.settings.enchantmentTooltipFix.description": "Fixes tooltip texture on enchantments on MMOItems.",
+  "emberutils.settings.mmoItemNameFix": "MMOItem name fix",
+  "emberutils.settings.mmoItemNameFix.description": "Fixes item name carrying tooltip background in chat or above hotbar.",
+  "emberutils.settings.centeredItemNameBackground": "Centered item name background",
+  "emberutils.settings.centeredItemNameBackground.description": "Center the MMOItems name background on above hotbar.",
+  "emberutils.settings.prettierItemName": "Prettier item name",
+  "emberutils.settings.prettierItemName.description": "Fixes MMOItems that has previously took out from an anvil which will lose name background.",
+  "emberutils.settings.runeTooltip": "Rune tooltip",
+  "emberutils.settings.runeTooltip.description": "Reveals runes on MMOItems' tooltip.",
+  "emberutils.settings.keepChat": "Keep chat",
+  "emberutils.settings.keepChat.description": "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D."
+}
