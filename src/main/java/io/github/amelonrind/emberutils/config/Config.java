@@ -41,4 +41,16 @@ public class Config {
     @SerialEntry(comment = "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D.")
     public boolean keepChat = true;
 
+    @SerialEntry(comment = "Notifies in chat when a factory product is complete.")
+    public boolean factoryNotification = true;
+
+    @SerialEntry(comment = "Notifies in chat when a smithing item is complete.")
+    public boolean smithingNotification = true;
+
+    @SerialEntry(comment = "Requests window attention when notifying.")
+    public boolean requestsAttention = true;
+
+    @SerialEntry(comment = "Adds an eye-catching hud to the screen, reminds you to not forget about uranium.")
+    public boolean uraniumHud = false;
+
 }

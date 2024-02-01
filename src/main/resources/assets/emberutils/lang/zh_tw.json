@@ -15,5 +15,13 @@
   "emberutils.settings.gemstoneTooltip": "符石顯示",
   "emberutils.settings.gemstoneTooltip.description": "在註解顯示已鑲嵌的符石種類",
   "emberutils.settings.keepChat": "保留聊天訊息",
-  "emberutils.settings.keepChat.description": "即使切換伺服器或斷線都會保留聊天欄訊息 你仍然能用F3+D清除聊天訊息"
+  "emberutils.settings.keepChat.description": "即使切換伺服器或斷線都會保留聊天欄訊息 你仍然能用F3+D清除聊天訊息",
+  "emberutils.settings.factoryNotification": "工廠通知",
+  "emberutils.settings.factoryNotification.description": "當工廠產品完成時在聊天欄通知",
+  "emberutils.settings.smithingNotification": "工匠通知",
+  "emberutils.settings.smithingNotification.description": "當工匠物品完成時在聊天欄通知",
+  "emberutils.settings.requestsAttention": "請求注意視窗",
+  "emberutils.settings.requestsAttention.description": "在通知時也請求注意視窗",
+  "emberutils.settings.uraniumHud": "鈾抬頭顯示器",
+  "emberutils.settings.uraniumHud.description": "新增醒目的抬頭顯示器到螢幕上 避免忘記鈾產線"
 }

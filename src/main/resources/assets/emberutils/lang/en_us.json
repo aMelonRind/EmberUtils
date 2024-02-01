@@ -15,5 +15,13 @@
   "emberutils.settings.gemstoneTooltip": "Gemstone tooltip",
   "emberutils.settings.gemstoneTooltip.description": "Reveals gemstones on MMOItems' tooltip.",
   "emberutils.settings.keepChat": "Keep chat",
-  "emberutils.settings.keepChat.description": "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D."
+  "emberutils.settings.keepChat.description": "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D.",
+  "emberutils.settings.factoryNotification": "Factory Notification",
+  "emberutils.settings.factoryNotification.description": "Notifies in chat when a factory product is complete.",
+  "emberutils.settings.smithingNotification": "Smithing Notification",
+  "emberutils.settings.smithingNotification.description": "Notifies in chat when a smithing item is complete.",
+  "emberutils.settings.requestsAttention": "Requests Attention",
+  "emberutils.settings.requestsAttention.description": "Requests window attention when notifying.",
+  "emberutils.settings.uraniumHud": "Uranium Hud",
+  "emberutils.settings.uraniumHud.description": "Adds an eye-catching hud to the screen, reminds you to not forget about uranium."
 }

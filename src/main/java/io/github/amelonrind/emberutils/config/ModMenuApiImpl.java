@@ -73,6 +73,10 @@ public class ModMenuApiImpl implements ModMenuApi {
                                 KeepChat.isClearingChatWithF3D = false;
                                 cfg.keepChat = val;
                             }))
+                            .option(optionOf("factoryNotification", () -> cfg.factoryNotification, val -> cfg.factoryNotification = val))
+                            .option(optionOf("smithingNotification", () -> cfg.smithingNotification, val -> cfg.smithingNotification = val))
+                            .option(optionOf("requestsAttention", () -> cfg.requestsAttention, val -> cfg.requestsAttention = val))
+                            .option(optionOf("uraniumHud", () -> cfg.uraniumHud, val -> cfg.uraniumHud = val))
                             .build())
                     .save(Config.HANDLER::save)
                     .build()
