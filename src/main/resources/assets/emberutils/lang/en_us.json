@@ -1,4 +1,10 @@
 {
+  "emberutils.start_factory": "Started tracking %s factory.",
+  "emberutils.finish_factory": "%s factory is done!",
+  "emberutils.start_smithing": "Started tracking smith %s's %d items.",
+  "emberutils.progress_smithing": "Smith %s has finished %d/%d items, remaining time: %s",
+  "emberutils.finish_smithing": "Smith %s has finished %d items!",
+
   "emberutils.settings.title": "EmberUtils Config",
   "emberutils.settings.category.visuals": "Visuals",
   "emberutils.settings.category.utils": "Utils",

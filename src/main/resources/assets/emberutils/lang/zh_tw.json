@@ -1,4 +1,10 @@
 {
+  "emberutils.start_factory": "已記錄%s工廠的倒數時間",
+  "emberutils.finish_factory": "%s工廠已完成!",
+  "emberutils.start_smithing": "已記錄工匠 %s 的%d個物品",
+  "emberutils.progress_smithing": "工匠 %s 已完成%d/%d個物品 剩餘時間: %s",
+  "emberutils.finish_smithing": "工匠 %s 已完成%d個物品!",
+
   "emberutils.settings.title": "EmberUtils 選項",
   "emberutils.settings.category.visuals": "視覺",
   "emberutils.settings.category.utils": "工具",

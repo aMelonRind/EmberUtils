@@ -7,9 +7,11 @@
   ],
   "client": [
     "MixinChatHud",
+    "MixinClientPlayerInteractionManager",
     "MixinInGameHud",
     "MixinItemStack",
-    "MixinKeyboard"
+    "MixinKeyboard",
+    "MixinMinecraftClient"
   ],
   "injectors": {
     "defaultRequire": 1
