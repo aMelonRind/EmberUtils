@@ -8,7 +8,7 @@ import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import io.github.amelonrind.emberutils.EmberUtils;
-import io.github.amelonrind.emberutils.features.KeepChat;
+import io.github.amelonrind.emberutils.feature.KeepChat;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;

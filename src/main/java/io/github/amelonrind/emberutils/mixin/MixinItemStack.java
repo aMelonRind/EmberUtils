@@ -1,9 +1,9 @@
 package io.github.amelonrind.emberutils.mixin;
 
 import io.github.amelonrind.emberutils.config.Config;
-import io.github.amelonrind.emberutils.features.EnchantmentTooltipFix;
-import io.github.amelonrind.emberutils.features.GemstoneTooltip;
-import io.github.amelonrind.emberutils.features.PrettierItemName;
+import io.github.amelonrind.emberutils.feature.EnchantmentTooltipFix;
+import io.github.amelonrind.emberutils.feature.GemstoneTooltip;
+import io.github.amelonrind.emberutils.feature.PrettierItemName;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

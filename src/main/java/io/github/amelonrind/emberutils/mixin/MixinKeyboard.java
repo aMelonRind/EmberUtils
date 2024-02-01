@@ -1,6 +1,6 @@
 package io.github.amelonrind.emberutils.mixin;
 
-import io.github.amelonrind.emberutils.features.KeepChat;
+import io.github.amelonrind.emberutils.feature.KeepChat;
 import net.minecraft.client.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

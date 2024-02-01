@@ -1,4 +1,4 @@
-package io.github.amelonrind.emberutils.features;
+package io.github.amelonrind.emberutils.feature;
 
 import io.github.amelonrind.emberutils.config.Config;
 import net.minecraft.enchantment.EnchantmentHelper;

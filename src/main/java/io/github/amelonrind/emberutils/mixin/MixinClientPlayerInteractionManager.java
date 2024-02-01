@@ -1,6 +1,6 @@
 package io.github.amelonrind.emberutils.mixin;
 
-import io.github.amelonrind.emberutils.features.SmithingNotifier;
+import io.github.amelonrind.emberutils.feature.SmithingNotifier;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

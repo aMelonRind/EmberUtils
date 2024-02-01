@@ -1,4 +1,4 @@
-package io.github.amelonrind.emberutils.features;
+package io.github.amelonrind.emberutils.feature;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

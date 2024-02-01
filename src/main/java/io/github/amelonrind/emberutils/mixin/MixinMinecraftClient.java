@@ -1,9 +1,9 @@
 package io.github.amelonrind.emberutils.mixin;
 
 import io.github.amelonrind.emberutils.EmberUtils;
-import io.github.amelonrind.emberutils.features.FactoryNotifier;
-import io.github.amelonrind.emberutils.features.SmithingNotifier;
-import io.github.amelonrind.emberutils.features.UraniumHud;
+import io.github.amelonrind.emberutils.feature.FactoryNotifier;
+import io.github.amelonrind.emberutils.feature.SmithingNotifier;
+import io.github.amelonrind.emberutils.feature.UraniumHud;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;

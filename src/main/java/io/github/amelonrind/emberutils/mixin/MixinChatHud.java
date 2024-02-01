@@ -1,7 +1,7 @@
 package io.github.amelonrind.emberutils.mixin;
 
-import io.github.amelonrind.emberutils.features.KeepChat;
-import io.github.amelonrind.emberutils.features.MmoItemNameFix;
+import io.github.amelonrind.emberutils.feature.KeepChat;
+import io.github.amelonrind.emberutils.feature.MmoItemNameFix;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;

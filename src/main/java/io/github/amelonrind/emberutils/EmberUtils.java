@@ -1,8 +1,8 @@
 package io.github.amelonrind.emberutils;
 
 import io.github.amelonrind.emberutils.config.Config;
-import io.github.amelonrind.emberutils.features.Notifier;
-import io.github.amelonrind.emberutils.features.UraniumHud;
+import io.github.amelonrind.emberutils.feature.Notifier;
+import io.github.amelonrind.emberutils.feature.UraniumHud;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
