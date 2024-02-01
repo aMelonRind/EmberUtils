@@ -4,6 +4,7 @@
   "emberutils.start_smithing": "Started tracking smith %s's %d items.",
   "emberutils.progress_smithing": "Smith %s has finished %d/%d items, remaining time: %s",
   "emberutils.finish_smithing": "Smith %s has finished %d items!",
+  "emberutils.check_uranium": "Check Uranium Factory!",
 
   "emberutils.settings.title": "EmberUtils Config",
   "emberutils.settings.category.visuals": "Visuals",

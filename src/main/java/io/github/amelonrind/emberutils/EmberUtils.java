@@ -2,6 +2,7 @@ package io.github.amelonrind.emberutils;
 
 import io.github.amelonrind.emberutils.config.Config;
 import io.github.amelonrind.emberutils.features.Notifier;
+import io.github.amelonrind.emberutils.features.UraniumHud;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -47,6 +48,7 @@ public class EmberUtils implements ClientModInitializer {
     private void tick(MinecraftClient mc) {
         long now = System.currentTimeMillis();
         Notifier.tick(now);
+        UraniumHud.tick(now);
     }
 
     public static boolean isNpc(@NotNull Entity entity) {
