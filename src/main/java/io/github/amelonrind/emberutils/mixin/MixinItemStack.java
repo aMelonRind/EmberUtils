@@ -1,23 +1,17 @@
 package io.github.amelonrind.emberutils.mixin;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import io.github.amelonrind.emberutils.config.Config;
+import io.github.amelonrind.emberutils.features.EnchantmentTooltipFix;
+import io.github.amelonrind.emberutils.features.GemstoneTooltip;
+import io.github.amelonrind.emberutils.features.PrettierItemName;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.Registries;
-import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Language;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,38 +23,17 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
 
 @Mixin(ItemStack.class)
 public class MixinItemStack {
     @Unique
-    private static final LinkedHashMap<String, String> enchantmentTextCache = new LinkedHashMap<>(32, 0.75f, true) {
-
-        @Override
-        protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
-            return size() > 24;
-        }
-
-    };
-    @Unique
     private static final String prefix = "\uEA6E 뀁 \uEA72\uEA6F\uEA6E\uEA6C";
-    @Unique
-    private static final String prefixChar = "뀁";
-    @Unique
-    private static final String prefix1 = "\uEA6E ";
-    @Unique
-    private static final String prefix2 = " \uEA72\uEA6F\uEA6E\uEA6C";
     @Unique
     private static final String charsFrom = "뀎뀈뀑뀅뀂뀋";
     @Unique
     private static final String charsTo = "뀍뀇뀐뀄뀀뀊";
-    @Unique
-    private static final String appliedGemstoneText = "\uEA6E 뀁 \uEA72\uEA6F\uEA6E\uEA6C♦ 已鑲嵌";
     @Shadow
     @Nullable
     private NbtCompound nbt;
@@ -105,76 +78,17 @@ public class MixinItemStack {
 
     @Inject(method = "getName", at = @At("RETURN"), cancellable = true)
     private void getName(CallbackInfoReturnable<Text> cir) {
-        if (!Config.get().prettierItemName || !isMmoItem() || namePrefix == null) return;
-        Text text = cir.getReturnValue();
-        Optional<String> start = text.visit(Optional::of);
-        if (start.isEmpty()) return;
-        String startStr = start.get();
-        if (startStr.contains(namePrefix)) return;
-        if (startStr.startsWith(" ")) {
-            AtomicBoolean isFirst = new AtomicBoolean(true);
-            MutableText t = Text.empty();
-            text.visit((style, str) -> {
-                if (isFirst.get()) {
-                    try {
-                        t.append(Text.literal(str.stripLeading()).setStyle(style));
-                    } catch (IndexOutOfBoundsException ignore) {}
-                    isFirst.set(false);
-                } else {
-                    t.append(Text.literal(str).setStyle(style));
-                }
-                return Optional.empty();
-            }, Style.EMPTY);
-            text = t;
-        }
-        cir.setReturnValue(Text.empty()
-                .append(Text.literal(prefix1 + namePrefix + prefix2)
-                        .setStyle(Style.EMPTY.withItalic(false).withColor(0xFFFFFF)))
-                .append(text)
-        );
+        PrettierItemName.onGetName(cir, this::isMmoItem, namePrefix);
     }
 
     @ModifyArgs(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendEnchantments(Ljava/util/List;Lnet/minecraft/nbt/NbtList;)V"))
     private void appendEnchantments(Args args) {
-        if (!Config.get().enchantmentTooltipFix) return;
-        List<Text> tooltip = args.get(0);
-        NbtList enchantments = args.get(1);
-        args.set(1, new NbtList());
-        Function<Text, Text> func = isMmoItem() ? t -> Text.literal(prefix).append(t) : t -> t;
-        Language lang = Language.getInstance();
-        for (int i = 0; i < enchantments.size(); ++i) {
-            NbtCompound nbtCompound = enchantments.getCompound(i);
-            Registries.ENCHANTMENT.getOrEmpty(EnchantmentHelper.getIdFromNbt(nbtCompound)).ifPresent((e) -> {
-                String str = lang.get(e.getTranslationKey());
-                String cache = enchantmentTextCache.get(str);
-                if (cache != null) {
-                    str = cache;
-                } else {
-                    String res = str;
-                    int index = res.indexOf(prefix);
-                    if (index != -1) {
-                        res = res.substring(0, index) + res.substring(index + prefix.length());
-                    } else {
-                        index = res.indexOf(prefixChar);
-                        if (index != -1) {
-                            res = res.substring(0, index) + res.substring(index + 1);
-                        }
-                    }
-                    enchantmentTextCache.put(str, res);
-                    str = res;
-                }
+        EnchantmentTooltipFix.onAppendEnchantments(args, this::isMmoItem);
+    }
 
-                MutableText text = Text.literal(str);
-                text.formatted(e.isCursed() ? Formatting.RED : Formatting.GRAY);
-
-                int level = EnchantmentHelper.getLevelFromNbt(nbtCompound);
-                if (level != 1 || e.getMaxLevel() != 1) {
-                    text.append(ScreenTexts.SPACE).append(Text.translatable("enchantment.level." + level));
-                }
-
-                tooltip.add(func.apply(text));
-            });
-        }
+    @Inject(method = "getTooltip", at = @At("RETURN"))
+    private void revealRunes(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
+        GemstoneTooltip.revealRunes(cir, nbt);
     }
 
     @Unique
@@ -209,42 +123,6 @@ public class MixinItemStack {
             cir.setReturnValue(barColor);
             barColor = null;
         }
-    }
-
-    @Inject(method = "getTooltip", at = @At("RETURN"))
-    private void revealRunes(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
-        if (!Config.get().gemstoneTooltip) return;
-        if (nbt == null || !nbt.contains("MMOITEMS_GEM_STONES", NbtElement.STRING_TYPE)) return;
-        try {
-            JsonArray gemstones = JsonParser.parseString(nbt.getString("MMOITEMS_GEM_STONES"))
-                    .getAsJsonObject().get("Gemstones").getAsJsonArray();
-            if (gemstones.isEmpty()) return;
-            List<Text> tooltip = cir.getReturnValue();
-            int size = tooltip.size();
-
-            int startIndex = 0;
-            while (startIndex < size) {
-                if (tooltip.get(startIndex).getString().equals(appliedGemstoneText)) break;
-                startIndex++;
-            }
-            if (startIndex == size) return;
-            int endIndex = startIndex + 1;
-            int limit = Math.min(size, startIndex + gemstones.size() + 1);
-            while (endIndex < limit) {
-                if (!tooltip.get(endIndex).getString().equals(appliedGemstoneText)) break;
-                endIndex++;
-            }
-            if (endIndex - startIndex != gemstones.size()) return;
-            size = gemstones.size();
-            for (int i = 0; i < size; i++) {
-                JsonObject gemstone = gemstones.get(i).getAsJsonObject();
-                String name = gemstone.get("Name").getAsString();
-                String color = gemstone.get("Color").getAsString();
-                if (name.startsWith(prefix2, 5)) name = name.substring(10);
-                color = "§" + color.charAt(1);
-                tooltip.set(startIndex + i, Text.literal(prefix + color + "<§f" + name + color + ">"));
-            }
-        } catch (Exception ignore) {}
     }
 
 }

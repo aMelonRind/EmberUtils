@@ -10,8 +10,6 @@ import org.jetbrains.annotations.NotNull;
 public class EmberUtils implements ClientModInitializer {
     public static final String MOD_ID = "emberutils";
 
-    public static boolean isClearingChatWithF3D = false;
-
     @Contract(value = "_ -> new", pure = true)
     public static @NotNull MutableText translatable(String key) {
         return Text.translatable(MOD_ID + "." + key);

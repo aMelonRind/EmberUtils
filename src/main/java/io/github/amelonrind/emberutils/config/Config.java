@@ -11,7 +11,7 @@ public class Config {
     public static final ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
             .id(new Identifier(EmberUtils.MOD_ID, "main"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
-                    .setPath(FabricLoader.getInstance().getConfigDir().resolve(EmberUtils.MOD_ID + ".json5"))
+                    .setPath(FabricLoader.getInstance().getConfigDir().resolve(EmberUtils.MOD_ID).resolve("settings.json5"))
                     .setJson5(true)
                     .build())
             .build();

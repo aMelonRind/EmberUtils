@@ -1,6 +1,7 @@
 {
   "emberutils.settings.title": "EmberUtils Config",
-  "emberutils.settings.category": "Settings",
+  "emberutils.settings.category.visuals": "Visuals",
+  "emberutils.settings.category.utils": "Utils",
   "emberutils.settings.enchantmentTooltipFix": "Enchantment tooltip fix",
   "emberutils.settings.enchantmentTooltipFix.description": "Fixes tooltip texture on enchantments.",
   "emberutils.settings.durabilityDisplayFix": "Durability display fix",

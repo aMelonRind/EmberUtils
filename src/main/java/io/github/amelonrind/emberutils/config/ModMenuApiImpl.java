@@ -8,6 +8,7 @@ import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import io.github.amelonrind.emberutils.EmberUtils;
+import io.github.amelonrind.emberutils.features.KeepChat;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
@@ -58,15 +59,18 @@ public class ModMenuApiImpl implements ModMenuApi {
             return YetAnotherConfigLib.createBuilder()
                     .title(translatable("title"))
                     .category(ConfigCategory.createBuilder()
-                            .name(translatable("category"))
+                            .name(translatable("category.visuals"))
                             .option(optionOf("enchantmentTooltipFix", 199, 223, () -> cfg.enchantmentTooltipFix, val -> cfg.enchantmentTooltipFix = val))
                             .option(optionOf("durabilityDisplayFix", 275, 189, () -> cfg.durabilityDisplayFix, val -> cfg.durabilityDisplayFix = val))
                             .option(optionOf("mmoItemNameFix", 305, 94, () -> cfg.mmoItemNameFix, val -> cfg.mmoItemNameFix = val))
                             .option(optionOf("centeredItemNameBackground", 379, 175, () -> cfg.centeredItemNameBackground, val -> cfg.centeredItemNameBackground = val))
                             .option(optionOf("prettierItemName", 383, 204, () -> cfg.prettierItemName, val -> cfg.prettierItemName = val))
+                            .build())
+                    .category(ConfigCategory.createBuilder()
+                            .name(translatable("category.utils"))
                             .option(optionOf("gemstoneTooltip", 393, 468, () -> cfg.gemstoneTooltip, val -> cfg.gemstoneTooltip = val))
                             .option(optionOf("keepChat", () -> cfg.keepChat, val -> {
-                                EmberUtils.isClearingChatWithF3D = false;
+                                KeepChat.isClearingChatWithF3D = false;
                                 cfg.keepChat = val;
                             }))
                             .build())

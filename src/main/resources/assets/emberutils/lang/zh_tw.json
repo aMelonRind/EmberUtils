@@ -1,6 +1,7 @@
 {
   "emberutils.settings.title": "EmberUtils 選項",
-  "emberutils.settings.category": "設定",
+  "emberutils.settings.category.visuals": "視覺",
+  "emberutils.settings.category.utils": "工具",
   "emberutils.settings.enchantmentTooltipFix": "修復附魔註解",
   "emberutils.settings.enchantmentTooltipFix.description": "修復附魔旁的自訂義外框",
   "emberutils.settings.durabilityDisplayFix": "耐久度顯示",
