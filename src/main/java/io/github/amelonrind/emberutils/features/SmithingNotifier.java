@@ -87,7 +87,7 @@ public class SmithingNotifier {
             if (i < 0 || times.get(i) == 0) continue;
             if (i == lastIndex) {
                 if (Config.get().smithingNotification) {
-                    EmberUtils.logChat(EmberUtils.translatable("finish_smithing", lastNpcName, times.size()));
+                    EmberUtils.logChat(EmberUtils.translatable("finish_smithing", smith, times.size()));
                     if (Config.get().requestsAttention) EmberUtils.requestWindowAttention();
                 }
                 ongoings.remove(smith);
@@ -96,7 +96,7 @@ public class SmithingNotifier {
                     long left = (times.get(lastIndex) - now) / 1000 + 1;
                     String leftStr = (left % 60) + "s";
                     if (left >= 60) leftStr = (left / 60) + "m " + leftStr;
-                    EmberUtils.logChat(EmberUtils.translatable("progress_smithing", lastNpcName, i + 1, times.size(), leftStr));
+                    EmberUtils.logChat(EmberUtils.translatable("progress_smithing", smith, i + 1, times.size(), leftStr));
                 }
                 for (;i >= 0; i--) times.set(i, 0L);
             }
