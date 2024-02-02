@@ -41,6 +41,12 @@ public class Config {
     @SerialEntry(comment = "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D.")
     public boolean keepChat = true;
 
+    @SerialEntry(comment = "Prevents you from accidentally purchasing factories. You'll need to click 3 times to buy the factory.")
+    public boolean purchaseBlocker = true;
+
+    @SerialEntry(comment = "Auto select next item when exchanging items with a npc.")
+    public boolean autoSelectNextItem = true;
+
     @SerialEntry(comment = "Notifies in chat when a factory product is complete.")
     public boolean factoryNotification = true;
 

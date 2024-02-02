@@ -73,6 +73,8 @@ public class ModMenuApiImpl implements ModMenuApi {
                                 KeepChat.isClearingChatWithF3D = false;
                                 cfg.keepChat = val;
                             }))
+                            .option(optionOf("purchaseBlocker", () -> cfg.purchaseBlocker, val -> cfg.purchaseBlocker = val))
+                            .option(optionOf("autoSelectNextItem", () -> cfg.autoSelectNextItem, val -> cfg.autoSelectNextItem = val))
                             .option(optionOf("factoryNotification", () -> cfg.factoryNotification, val -> cfg.factoryNotification = val))
                             .option(optionOf("smithingNotification", () -> cfg.smithingNotification, val -> cfg.smithingNotification = val))
                             .option(optionOf("requestsAttention", () -> cfg.requestsAttention, val -> cfg.requestsAttention = val))
