@@ -1,6 +1,6 @@
 EmberUtils
 ========
-![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20.2--4%20fabric-brightgreen)
+[![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20.2--4%20fabric-brightgreen)](https://prismlauncher.org/)
 [![Discord](https://discordapp.com/api/guilds/183081720281694210/widget.png)](https://discord.gg/YMyvUUx7VH)
 
 ![Icon](https://raw.githubusercontent.com/aMelonRind/EmberUtils/master/src/main/resources/assets/emberutils/icon.png)
