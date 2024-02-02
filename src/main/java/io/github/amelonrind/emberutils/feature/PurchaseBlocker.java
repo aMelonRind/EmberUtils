@@ -26,7 +26,7 @@ public class PurchaseBlocker {
 
     public static void onClickSlot(ScreenHandler handler, int syncId, int slotId, CallbackInfo ci) {
         if (!Config.get().purchaseBlocker) return;
-        if (slotId >= 45) return;
+        if (slotId < 0 || slotId >= 45) return;
         if (syncId != handler.syncId) return;
         if (!(handler instanceof GenericContainerScreenHandler h)) return;
         if (h.getRows() != 5) return;
