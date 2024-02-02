@@ -5,6 +5,8 @@
   "emberutils.progress_smithing": "Smith %s has finished %d/%d items, remaining time: %s",
   "emberutils.finish_smithing": "Smith %s has finished %d items!",
   "emberutils.check_uranium": "Check Uranium Factory!",
+  "emberutils.purchase_blocked": "Blocked factory purchase!",
+  "emberutils.purchase_blocked2": "Blocked factory purchase! Click again to purchase.",
 
   "emberutils.settings.title": "EmberUtils Config",
   "emberutils.settings.category.visuals": "Visuals",

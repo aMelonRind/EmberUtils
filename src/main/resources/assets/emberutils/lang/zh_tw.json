@@ -5,6 +5,8 @@
   "emberutils.progress_smithing": "工匠 %s 已完成%d/%d個物品 剩餘時間: %s",
   "emberutils.finish_smithing": "工匠 %s 已完成%d個物品!",
   "emberutils.check_uranium": "檢查鈾工廠!",
+  "emberutils.purchase_blocked": "阻擋了購買工廠的動作!",
+  "emberutils.purchase_blocked2": "阻擋了購買工廠的動作! 再點一次確認購買",
 
   "emberutils.settings.title": "EmberUtils 選項",
   "emberutils.settings.category.visuals": "視覺",
