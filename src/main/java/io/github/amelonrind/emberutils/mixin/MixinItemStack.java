@@ -89,6 +89,26 @@ public class MixinItemStack {
         GemstoneTooltip.revealRunes(cir, nbt);
     }
 
+    // feature preventDoubleDurability
+    @Unique
+    private boolean overrideNextIsDamagedCall = false;
+
+    @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isDamaged()Z"))
+    private void onDamageTooltip(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
+        if (!Config.get().preventDoubleDurability) return;
+        if (nbt == null || !nbt.contains("MMOITEMS_MAX_DURABILITY", NbtElement.INT_TYPE)) return;
+        overrideNextIsDamagedCall = true;
+    }
+
+    @Inject(method = "isDamaged", at = @At("HEAD"), cancellable = true)
+    private void isDamaged(CallbackInfoReturnable<Boolean> cir) {
+        if (overrideNextIsDamagedCall) {
+            cir.setReturnValue(false);
+            overrideNextIsDamagedCall = false;
+        }
+    }
+
+    // feature durabilityDisplayFix
     @Unique
     private Integer barStep = null;
     @Unique
