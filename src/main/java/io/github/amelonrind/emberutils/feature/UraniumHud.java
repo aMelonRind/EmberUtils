@@ -42,10 +42,7 @@ public class UraniumHud {
         var ongoings = Notifier.instance().factories;
         if (ongoings.containsKey(uranium)) {
             renderMethod = UraniumHud::renderCountdown;
-            long delta = (ongoings.get(uranium) - now) / 1000;
-            String str = (delta % 60) + "s";
-            if (delta >= 60) str = (delta / 60) + "m " + str;
-            text = Text.literal(str);
+            text = Text.literal(EmberUtils.toDurationString((int) (ongoings.get(uranium) - now) / 1000));
             x = (mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(text) + 20) / 2;
         } else {
             renderMethod = UraniumHud::renderNotify;

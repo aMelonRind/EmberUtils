@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class FactoryNotifier {
     private static final String TITLE = "\uE500\uE500\uE500\uE500\uE500\uE500\uE500\uE500㊜";
     private static final int[] slots = new int[] { 21, 22, 23 };
-    private static final Pattern timePattern = Pattern.compile("^剩餘時間: (?:(\\d+)m)?\\s?(?:(\\d+)s)?$");
+    private static final Pattern timePattern = Pattern.compile("^剩餘時間: (?:(\\d+)d)?\\s?(?:(\\d+)h)?\\s?(?:(\\d+)m)?\\s?(?:(\\d+)s)?$", Pattern.CASE_INSENSITIVE);
 
     public static void onCloseGui(String title, GenericContainerScreenHandler handler) {
         if (!TITLE.equals(title)) return;
@@ -45,7 +45,7 @@ public class FactoryNotifier {
             if (timeText == null) break;
             Matcher matcher = timePattern.matcher(timeText.getString());
             if (!matcher.matches()) break;
-            int time = EmberUtils.parseDuration(matcher.group(1), matcher.group(2));
+            int time = EmberUtils.parseDuration(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
             if (time <= 0) break;
             var ongoings = Notifier.instance().factories;
             if (!ongoings.containsKey(product) && Config.get().factoryNotification) {

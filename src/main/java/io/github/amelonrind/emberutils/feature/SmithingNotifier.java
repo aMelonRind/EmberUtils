@@ -21,7 +21,7 @@ import static io.github.amelonrind.emberutils.EmberUtils.mc;
 public class SmithingNotifier {
     private static final String TITLE = "\uEA6Eఋ";
     private static final int[] slots = new int[] { 38, 39, 40, 41, 42 };
-    private static final Pattern timePattern = Pattern.compile("^即將完成 (?:(\\d+)m)?\\s?(?:(\\d+)s)?\\s*$");
+    private static final Pattern timePattern = Pattern.compile("^即將完成 (?:(\\d+)d)?\\s?(?:(\\d+)h)?\\s?(?:(\\d+)m)?\\s?(?:(\\d+)s)?\\s*$", Pattern.CASE_INSENSITIVE);
     private static String lastNpcName = null;
     private static Entity lastNpc = null;
 
@@ -61,7 +61,7 @@ public class SmithingNotifier {
             if (timeText == null) break;
             Matcher matcher = timePattern.matcher(timeText.getString());
             if (!matcher.matches()) break;
-            int time = EmberUtils.parseDuration(matcher.group(1), matcher.group(2));
+            int time = EmberUtils.parseDuration(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
             times.add(time <= 0 ? 0L : now + time + 1000);
         }
         var ongoings = Notifier.instance().smiths;
@@ -93,9 +93,7 @@ public class SmithingNotifier {
                 ongoings.remove(smith);
             } else {
                 if (Config.get().smithingNotification) {
-                    long left = (times.get(lastIndex) - now) / 1000 + 1;
-                    String leftStr = (left % 60) + "s";
-                    if (left >= 60) leftStr = (left / 60) + "m " + leftStr;
+                    String leftStr = EmberUtils.toDurationString((int) ((times.get(lastIndex) - now) / 1000) + 1);
                     EmberUtils.logChat(EmberUtils.translatable("progress_smithing", smith, i + 1, times.size(), leftStr));
                 }
                 for (;i >= 0; i--) times.set(i, 0L);

@@ -61,14 +61,22 @@ public class EmberUtils implements ClientModInitializer {
         mc.inGameHud.getChatHud().addMessage(Text.empty().append(chatPrefix).append(text));
     }
 
-    public static int parseDuration(@Nullable String minute, @Nullable String second) {
+    public static int parseDuration(@Nullable String day, @Nullable String hour, @Nullable String minute, @Nullable String second) {
         int time = 0;
-        if (minute != null) {
-            try {
-                int minutes = Integer.parseInt(minute);
-                time = minutes * 60;
-            } catch (NumberFormatException ignore) {}
-        }
+        if (day != null) try {
+            int days = Integer.parseInt(day);
+            time = days * 24;
+        } catch (NumberFormatException ignore) {}
+        if (hour != null) try {
+            int hours = Integer.parseInt(hour);
+            time += hours;
+        } catch (NumberFormatException ignore) {}
+        time *= 60;
+        if (minute != null) try {
+            int minutes = Integer.parseInt(minute);
+            time += minutes;
+        } catch (NumberFormatException ignore) {}
+        time *= 60;
         if (second != null) {
             try {
                 int seconds = Integer.parseInt(second);
@@ -76,6 +84,27 @@ public class EmberUtils implements ClientModInitializer {
             } catch (NumberFormatException ignore) {}
         }
         return time * 1000;
+    }
+
+    public static String toDurationString(int seconds) {
+        String res = seconds < 0 ? "-" : "";
+        if (seconds < 0) seconds = -seconds;
+        if (seconds >= 60 * 60) {
+            if (seconds >= 24 * 60 * 60) {
+                res += seconds / 60 / 60 / 24 + "d";
+                int hours = seconds / 60 / 60 % 24;
+                if (hours > 0) res += " " + hours + "h";
+            } else {
+                res += seconds / 60 / 60 + "h";
+                int minutes = seconds / 60 % 60;
+                if (minutes > 0) res += " " + minutes + "m";
+            }
+        } else if (seconds >= 60) {
+            res += seconds / 60 + "m";
+            int secs = seconds % 60;
+            if (secs > 0) res += " " + secs + "s";
+        } else res += seconds + "s";
+        return res;
     }
 
     public static void requestWindowAttention() {
