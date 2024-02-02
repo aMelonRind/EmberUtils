@@ -67,7 +67,10 @@ public class MixinItemStack {
 
     @Inject(method = "getName", at = @At("RETURN"), cancellable = true)
     private void getName(CallbackInfoReturnable<Text> cir) {
-        PrettierItemName.onGetName(cir, this::isMmoItem, namePrefix);
+        PrettierItemName.onGetName(cir, () -> {
+            isMmoItem();
+            return namePrefix;
+        });
     }
 
     @ModifyArgs(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendEnchantments(Ljava/util/List;Lnet/minecraft/nbt/NbtList;)V"))

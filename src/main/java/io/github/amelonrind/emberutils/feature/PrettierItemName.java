@@ -14,8 +14,10 @@ public class PrettierItemName {
     private static final String prefix1 = "\uEA6E ";
     private static final String prefix2 = " \uEA72\uEA6F\uEA6E\uEA6C";
 
-    public static void onGetName(CallbackInfoReturnable<Text> cir, Supplier<Boolean> isMmoItem, String namePrefix) {
-        if (!Config.get().prettierItemName || !isMmoItem.get() || namePrefix == null) return;
+    public static void onGetName(CallbackInfoReturnable<Text> cir, Supplier<String> namePrefixSupplier) {
+        if (!Config.get().prettierItemName) return;
+        String namePrefix = namePrefixSupplier.get();
+        if (namePrefix == null) return;
         Text text = cir.getReturnValue();
         Optional<String> start = text.visit(Optional::of);
         if (start.isEmpty()) return;
