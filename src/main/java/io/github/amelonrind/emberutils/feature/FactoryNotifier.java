@@ -1,11 +1,9 @@
 package io.github.amelonrind.emberutils.feature;
 
 import io.github.amelonrind.emberutils.EmberUtils;
+import io.github.amelonrind.emberutils.LoreHelper;
 import io.github.amelonrind.emberutils.config.Config;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -27,21 +25,15 @@ public class FactoryNotifier {
             ItemStack item = slot.getStack();
             if (item.isEmpty()) break;
             if (!"生產進行中".equals(item.getName().getString())) continue;
-            NbtCompound display = item.getSubNbt("display");
-            if (display == null || !display.contains("Lore", NbtElement.LIST_TYPE)) break;
-            NbtList lore = display.getList("Lore", NbtElement.STRING_TYPE);
-            int size = lore.size();
-            if (size < 3) break;
+            LoreHelper lore = LoreHelper.from(item);
 
-            Text productText = Text.Serialization.fromJson(lore.getString(size - 3));
-            if (productText == null) break;
-            String product = productText.getString();
-            if (!product.startsWith("產品: ")) break;
+            String product = lore.getString(-3);
+            if (product == null || !product.startsWith("產品: ")) break;
             product = product.substring("產品: ".length());
             int index = product.indexOf("x ");
             if (index != -1) product = product.substring(index + 2);
 
-            Text timeText = Text.Serialization.fromJson(lore.getString(size - 1));
+            Text timeText = lore.get(-1);
             if (timeText == null) break;
             Matcher matcher = timePattern.matcher(timeText.getString());
             if (!matcher.matches()) break;

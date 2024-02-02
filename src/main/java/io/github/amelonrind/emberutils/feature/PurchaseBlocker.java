@@ -1,17 +1,14 @@
 package io.github.amelonrind.emberutils.feature;
 
 import io.github.amelonrind.emberutils.EmberUtils;
+import io.github.amelonrind.emberutils.LoreHelper;
 import io.github.amelonrind.emberutils.config.Config;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Set;
@@ -41,15 +38,7 @@ public class PurchaseBlocker {
         if (!slot.hasStack()) return;
         ItemStack item = slot.getStack();
         if (item.isEmpty()) return;
-        NbtCompound display = item.getSubNbt("display");
-        if (display == null || !display.contains("Lore", NbtElement.LIST_TYPE)) return;
-        NbtList lore = display.getList("Lore", NbtElement.STRING_TYPE);
-        int size = lore.size();
-        if (size < 3) return;
-
-        Text text = Text.Serialization.fromJson(lore.getString(size - 3));
-        if (text == null) return;
-        if (!text.getString().startsWith("購買")) return;
+        if (!LoreHelper.from(item).startsWith(-3, "購買")) return;
 
         if (lastHandler != h || lastSlot != slotId) {
             lastHandler = h;

@@ -26,9 +26,7 @@ public class PrettierItemName {
             MutableText t = Text.empty();
             text.visit((style, str) -> {
                 if (isFirst.get()) {
-                    try {
-                        t.append(Text.literal(str.stripLeading()).setStyle(style));
-                    } catch (IndexOutOfBoundsException ignore) {}
+                    t.append(Text.literal(str.stripLeading()).setStyle(style));
                     isFirst.set(false);
                 } else {
                     t.append(Text.literal(str).setStyle(style));

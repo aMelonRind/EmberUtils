@@ -1,6 +1,5 @@
 package io.github.amelonrind.emberutils.mixin;
 
-import io.github.amelonrind.emberutils.EmberUtils;
 import io.github.amelonrind.emberutils.feature.PurchaseBlocker;
 import io.github.amelonrind.emberutils.feature.SmithingNotifier;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
@@ -25,11 +24,7 @@ public class MixinClientPlayerInteractionManager {
 
     @Inject(method = "clickSlot", at = @At("HEAD"), cancellable = true)
     private void onClickSlot(int syncId, int slotId, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
-        try {
-            PurchaseBlocker.onClickSlot(player.currentScreenHandler, syncId, slotId, ci);
-        } catch (Exception e) {
-            EmberUtils.LOGGER.error("Exception in PurchaseBlocker", e);
-        }
+        PurchaseBlocker.onClickSlot(player.currentScreenHandler, syncId, slotId, ci);
     }
 
 }

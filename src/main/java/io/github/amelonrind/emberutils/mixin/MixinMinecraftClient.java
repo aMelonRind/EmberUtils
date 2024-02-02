@@ -1,6 +1,5 @@
 package io.github.amelonrind.emberutils.mixin;
 
-import io.github.amelonrind.emberutils.EmberUtils;
 import io.github.amelonrind.emberutils.feature.FactoryNotifier;
 import io.github.amelonrind.emberutils.feature.SmithingNotifier;
 import io.github.amelonrind.emberutils.feature.UraniumHud;
@@ -28,17 +27,9 @@ public class MixinMinecraftClient {
             GenericContainerScreenHandler h = s.getScreenHandler();
             int rows = h.getRows();
             if (rows == 5) {
-                try {
-                    FactoryNotifier.onCloseGui(s.getTitle().getString(), h);
-                } catch (Exception e) {
-                    EmberUtils.LOGGER.error("Exception in FactoryNotifier", e);
-                }
+                FactoryNotifier.onCloseGui(s.getTitle().getString(), h);
             } else if (rows == 6) {
-                try {
-                    SmithingNotifier.onCloseGui(s.getTitle().getString(), h, screen == null);
-                } catch (Exception e) {
-                    EmberUtils.LOGGER.error("Exception in SmithingNotifier", e);
-                }
+                SmithingNotifier.onCloseGui(s.getTitle().getString(), h, screen == null);
             }
         }
     }

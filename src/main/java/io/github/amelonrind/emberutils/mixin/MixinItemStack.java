@@ -1,5 +1,6 @@
 package io.github.amelonrind.emberutils.mixin;
 
+import io.github.amelonrind.emberutils.LoreHelper;
 import io.github.amelonrind.emberutils.config.Config;
 import io.github.amelonrind.emberutils.feature.EnchantmentTooltipFix;
 import io.github.amelonrind.emberutils.feature.GemstoneTooltip;
@@ -9,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
@@ -45,33 +45,22 @@ public class MixinItemStack {
     @Unique
     private boolean isMmoItem() {
         if (isMmoItem == null) {
-            if (nbt != null && nbt.contains("display", NbtElement.COMPOUND_TYPE)) {
-                NbtCompound nbtCompound = this.nbt.getCompound("display");
-                if (nbtCompound.getType("Lore") == NbtElement.LIST_TYPE) {
-                    NbtList nbtList = nbtCompound.getList("Lore", NbtElement.STRING_TYPE);
-                    int size = nbtList.size();
-                    if (size > 1) try {
-                        MutableText text = Text.Serialization.fromJson(nbtList.getString(size - 2));
-                        if (text != null && text.getString().startsWith(prefix)) {
-                            isMmoItem = true;
-                            MutableText text2 = Text.Serialization.fromJson(nbtList.getString(size - 1));
-                            if (text2 != null) {
-                                Optional<String> start = text2.visit(Optional::of);
-                                if (start.isPresent()) {
-                                    String str = start.get();
-                                    if (str.length() >= 3) {
-                                        int index = charsFrom.indexOf(str.charAt(2));
-                                        if (index != -1) {
-                                            namePrefix = String.valueOf(charsTo.charAt(index));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } catch (Exception ignore) {}
+            LoreHelper lore = LoreHelper.from((ItemStack) (Object) this);
+            if (lore.size > 1 && lore.startsWith(-2, prefix)) {
+                isMmoItem = true;
+                MutableText text = lore.get(-1);
+                if (text == null) return true;
+                Optional<String> start = text.visit(Optional::of);
+                if (start.isEmpty()) return true;
+                String str = start.get();
+                if (str.length() < 3) return true;
+                int index = charsFrom.indexOf(str.charAt(2));
+                if (index != -1) {
+                    namePrefix = String.valueOf(charsTo.charAt(index));
                 }
+                return true;
             }
-            if (isMmoItem == null) isMmoItem = false;
+            return isMmoItem = false;
         }
         return isMmoItem;
     }

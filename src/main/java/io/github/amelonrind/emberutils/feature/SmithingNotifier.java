@@ -1,12 +1,10 @@
 package io.github.amelonrind.emberutils.feature;
 
 import io.github.amelonrind.emberutils.EmberUtils;
+import io.github.amelonrind.emberutils.LoreHelper;
 import io.github.amelonrind.emberutils.config.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -48,16 +46,13 @@ public class SmithingNotifier {
             ItemStack item = slot.getStack();
             if (item.isEmpty()) break;
             if (!"⏳".equals(item.getName().getString())) break;
-            NbtCompound display = item.getSubNbt("display");
-            if (display == null || !display.contains("Lore", NbtElement.LIST_TYPE)) break;
-            NbtList lore = display.getList("Lore", NbtElement.STRING_TYPE);
-            int size = lore.size();
-            if (size == 2) {
+            LoreHelper lore = LoreHelper.from(item);
+            if (lore.size == 2) {
                 times.add(0L);
                 continue;
-            } else if (size != 3) break;
+            } else if (lore.size != 3) break;
 
-            Text timeText = Text.Serialization.fromJson(lore.getString(0));
+            Text timeText = lore.get(0);
             if (timeText == null) break;
             Matcher matcher = timePattern.matcher(timeText.getString());
             if (!matcher.matches()) break;
