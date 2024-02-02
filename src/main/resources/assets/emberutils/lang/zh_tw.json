@@ -21,6 +21,8 @@
   "emberutils.settings.centeredItemNameBackground.description": "置中快捷欄上的物品名顯示的名字背景 會覆寫移除名字背景選項",
   "emberutils.settings.prettierItemName": "漂亮的名字",
   "emberutils.settings.prettierItemName.description": "修復從鐵砧拿出的物品的名字外框",
+  "emberutils.settings.trailingTooltipFix": "修復尾端註解",
+  "emberutils.settings.trailingTooltipFix.description": "更改MMOItem的進階註解的顯示方式",
   "emberutils.settings.gemstoneTooltip": "符石顯示",
   "emberutils.settings.gemstoneTooltip.description": "在註解顯示已鑲嵌的符石種類",
   "emberutils.settings.keepChat": "保留聊天訊息",

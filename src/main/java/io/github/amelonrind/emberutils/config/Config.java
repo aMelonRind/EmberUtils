@@ -35,6 +35,9 @@ public class Config {
     @SerialEntry(comment = "Fixes MMOItems that has previously took out from an anvil which will lose name background.")
     public boolean prettierItemName = true;
 
+    @SerialEntry(comment = "Fixes trailing advanced tooltips on MMOItems.")
+    public boolean trailingTooltipFix = true;
+
     @SerialEntry(comment = "Reveals runes on MMOItems' tooltip.")
     public boolean gemstoneTooltip = true;
 
