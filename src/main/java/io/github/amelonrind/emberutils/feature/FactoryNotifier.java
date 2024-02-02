@@ -49,7 +49,7 @@ public class FactoryNotifier {
             if (time <= 0) break;
             var ongoings = Notifier.instance().factories;
             if (!ongoings.containsKey(product) && Config.get().factoryNotification) {
-                EmberUtils.logChat(EmberUtils.translatable("start_factory", product));
+                EmberUtils.logTranslatableChat("start_factory", product);
             }
             long ends = now + time + 1000;
             ongoings.put(product, ends);
@@ -66,7 +66,7 @@ public class FactoryNotifier {
             ongoings.remove(product);
             Config cfg = Config.get();
             if (cfg.factoryNotification) {
-                EmberUtils.logChat(EmberUtils.translatable("finish_factory", product));
+                EmberUtils.logTranslatableChat("finish_factory", product);
                 if (cfg.requestsAttention) EmberUtils.requestWindowAttention();
             }
             UraniumHud.onProductFinish(product, cfg);

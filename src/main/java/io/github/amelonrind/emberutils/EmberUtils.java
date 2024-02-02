@@ -38,6 +38,14 @@ public class EmberUtils implements ClientModInitializer {
         return Text.translatable(MOD_ID + "." + key, args);
     }
 
+    public static void logTranslatableChat(String key) {
+        logChat(translatable(key));
+    }
+
+    public static void logTranslatableChat(String key, Object ...args) {
+        logChat(translatable(key, args));
+    }
+
     @Override
     public void onInitializeClient() {
         Config.HANDLER.load();

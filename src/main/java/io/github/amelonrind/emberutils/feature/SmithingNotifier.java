@@ -69,7 +69,7 @@ public class SmithingNotifier {
             if (ongoings.remove(lastNpcName) != null) Notifier.save();
         } else {
             if (closing && Config.get().smithingNotification) {
-                EmberUtils.logChat(EmberUtils.translatable("start_smithing", lastNpcName, times.size()));
+                EmberUtils.logTranslatableChat("start_smithing", lastNpcName, times.size());
             }
             ongoings.put(lastNpcName, times);
             Notifier.updateSoonest();
@@ -87,14 +87,14 @@ public class SmithingNotifier {
             if (i < 0 || times.get(i) == 0) continue;
             if (i == lastIndex) {
                 if (Config.get().smithingNotification) {
-                    EmberUtils.logChat(EmberUtils.translatable("finish_smithing", smith, times.size()));
+                    EmberUtils.logTranslatableChat("finish_smithing", smith, times.size());
                     if (Config.get().requestsAttention) EmberUtils.requestWindowAttention();
                 }
                 ongoings.remove(smith);
             } else {
                 if (Config.get().smithingNotification) {
                     String leftStr = EmberUtils.toDurationString((int) ((times.get(lastIndex) - now) / 1000) + 1);
-                    EmberUtils.logChat(EmberUtils.translatable("progress_smithing", smith, i + 1, times.size(), leftStr));
+                    EmberUtils.logTranslatableChat("progress_smithing", smith, i + 1, times.size(), leftStr);
                 }
                 for (;i >= 0; i--) times.set(i, 0L);
             }
