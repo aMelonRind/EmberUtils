@@ -5,6 +5,7 @@ import io.github.amelonrind.emberutils.config.Config;
 import io.github.amelonrind.emberutils.feature.EnchantmentTooltipFix;
 import io.github.amelonrind.emberutils.feature.GemstoneTooltip;
 import io.github.amelonrind.emberutils.feature.PrettierItemName;
+import io.github.amelonrind.emberutils.feature.TrailingTooltipFix;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -76,6 +77,11 @@ public class MixinItemStack {
     @ModifyArgs(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendEnchantments(Ljava/util/List;Lnet/minecraft/nbt/NbtList;)V"))
     private void appendEnchantments(Args args) {
         EnchantmentTooltipFix.onAppendEnchantments(args, this::isMmoItem);
+    }
+
+    @Inject(method = "getTooltip", at = @At("RETURN"))
+    private void getTooltip(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
+        TrailingTooltipFix.onGetTooltip(cir.getReturnValue(), context, this::isMmoItem);
     }
 
     @Inject(method = "getTooltip", at = @At("RETURN"))
