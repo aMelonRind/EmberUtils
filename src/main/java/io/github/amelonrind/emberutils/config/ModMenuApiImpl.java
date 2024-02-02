@@ -66,6 +66,7 @@ public class ModMenuApiImpl implements ModMenuApi {
                             .option(optionOf("centeredItemNameBackground", 379, 175, () -> cfg.centeredItemNameBackground, val -> cfg.centeredItemNameBackground = val))
                             .option(optionOf("prettierItemName", 383, 204, () -> cfg.prettierItemName, val -> cfg.prettierItemName = val))
                             .option(optionOf("trailingTooltipFix", () -> cfg.trailingTooltipFix, val -> cfg.trailingTooltipFix = val))
+                            .option(optionOf("preventDoubleDurability", () -> cfg.preventDoubleDurability, val -> cfg.preventDoubleDurability = val))
                             .build())
                     .category(ConfigCategory.createBuilder()
                             .name(translatable("category.utils"))

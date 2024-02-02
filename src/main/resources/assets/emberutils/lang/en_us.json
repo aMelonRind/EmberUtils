@@ -23,6 +23,8 @@
   "emberutils.settings.prettierItemName.description": "Fixes MMOItems that has previously took out from an anvil which will lose name background.",
   "emberutils.settings.trailingTooltipFix": "Trailing Tooltip Fix",
   "emberutils.settings.trailingTooltipFix.description": "Fixes trailing advanced tooltips on MMOItems.",
+  "emberutils.settings.preventDoubleDurability": "Prevent Double Durability",
+  "emberutils.settings.preventDoubleDurability.description": "Prevents double durability tooltip when the MMOItem has its own.",
   "emberutils.settings.gemstoneTooltip": "Gemstone tooltip",
   "emberutils.settings.gemstoneTooltip.description": "Reveals gemstones on MMOItems' tooltip.",
   "emberutils.settings.keepChat": "Keep chat",

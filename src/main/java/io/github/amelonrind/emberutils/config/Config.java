@@ -38,6 +38,9 @@ public class Config {
     @SerialEntry(comment = "Fixes trailing advanced tooltips on MMOItems.")
     public boolean trailingTooltipFix = true;
 
+    @SerialEntry(comment = "Prevents double durability tooltip when the MMOItem has its own.")
+    public boolean preventDoubleDurability = true;
+
     @SerialEntry(comment = "Reveals runes on MMOItems' tooltip.")
     public boolean gemstoneTooltip = true;
 

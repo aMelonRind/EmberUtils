@@ -23,6 +23,8 @@
   "emberutils.settings.prettierItemName.description": "修復從鐵砧拿出的物品的名字外框",
   "emberutils.settings.trailingTooltipFix": "修復尾端註解",
   "emberutils.settings.trailingTooltipFix.description": "更改MMOItem的進階註解的顯示方式",
+  "emberutils.settings.preventDoubleDurability": "防止兩個耐久值",
+  "emberutils.settings.preventDoubleDurability.description": "當MMOItem擁有自己的耐久值時 隱藏原版的耐久值",
   "emberutils.settings.gemstoneTooltip": "符石顯示",
   "emberutils.settings.gemstoneTooltip.description": "在註解顯示已鑲嵌的符石種類",
   "emberutils.settings.keepChat": "保留聊天訊息",
