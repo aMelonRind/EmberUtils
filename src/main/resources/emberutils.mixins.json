@@ -8,6 +8,7 @@
   "client": [
     "MixinChatHud",
     "MixinClientPlayerInteractionManager",
+    "MixinClientPlayNetworkHandler",
     "MixinInGameHud",
     "MixinItemStack",
     "MixinKeyboard",
