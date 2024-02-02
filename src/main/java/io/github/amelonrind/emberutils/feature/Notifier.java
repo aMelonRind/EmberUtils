@@ -31,14 +31,16 @@ public class Notifier {
     public static void load() {
         try (FileReader reader = new FileReader(file)) {
             instance = gson.fromJson(reader, Notifier.class);
+            updateSoonest();
         } catch (FileNotFoundException e) {
             instance = def;
+            soonest = Long.MAX_VALUE;
             save();
         } catch (IOException | JsonSyntaxException | JsonIOException e) {
             LOGGER.error("[EmberUtils Notifier] Couldn't read file, loading default.", e);
             instance = def;
+            soonest = Long.MAX_VALUE;
         }
-        updateSoonest();
     }
 
     public static void save() {
