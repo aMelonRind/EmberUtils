@@ -68,4 +68,10 @@ public class UraniumHud {
         context.drawCenteredTextWithShadow(mc.textRenderer, text, x, y, color);
     }
 
+    public static void onProductFinish(String product, Config cfg) {
+        if (uranium.equals(product)) {
+            if (cfg.uraniumHud && !cfg.requestsAttention) EmberUtils.requestWindowAttention();
+        }
+    }
+
 }

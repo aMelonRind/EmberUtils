@@ -64,10 +64,12 @@ public class FactoryNotifier {
         for (String product : ongoings.keySet()) {
             if (now < ongoings.get(product)) continue;
             ongoings.remove(product);
-            if (Config.get().factoryNotification) {
+            Config cfg = Config.get();
+            if (cfg.factoryNotification) {
                 EmberUtils.logChat(EmberUtils.translatable("finish_factory", product));
-                if (Config.get().requestsAttention) EmberUtils.requestWindowAttention();
+                if (cfg.requestsAttention) EmberUtils.requestWindowAttention();
             }
+            UraniumHud.onProductFinish(product, cfg);
             Notifier.save();
             return true;
         }
