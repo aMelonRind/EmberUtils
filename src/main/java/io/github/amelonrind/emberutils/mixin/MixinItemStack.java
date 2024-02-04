@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import java.util.List;
 import java.util.Optional;
 
-@Mixin(ItemStack.class)
+@Mixin(value = ItemStack.class, priority = 1002)
 public class MixinItemStack {
     @Unique
     private static final String prefix = "\uEA6E 뀁 \uEA72\uEA6F\uEA6E\uEA6C";
