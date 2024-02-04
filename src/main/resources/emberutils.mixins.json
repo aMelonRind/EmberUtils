@@ -4,6 +4,7 @@
   "package": "io.github.amelonrind.emberutils.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "MixinInteractionEntity"
   ],
   "client": [
     "MixinChatHud",
