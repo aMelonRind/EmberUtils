@@ -79,7 +79,7 @@ public class MixinItemStack {
         EnchantmentTooltipFix.onAppendEnchantments(args, this::isMmoItem);
     }
 
-    @Inject(method = "getTooltip", at = @At("RETURN"))
+    @Inject(method = "getTooltip", at = @At("TAIL"))
     private void getTooltip(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
         TrailingTooltipFix.onGetTooltip(cir.getReturnValue(), context, this::isMmoItem);
     }
