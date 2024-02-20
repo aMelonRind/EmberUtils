@@ -7,6 +7,7 @@
     "MixinInteractionEntity"
   ],
   "client": [
+    "MixinBossBarHud",
     "MixinChatHud",
     "MixinClientPlayerInteractionManager",
     "MixinClientPlayNetworkHandler",

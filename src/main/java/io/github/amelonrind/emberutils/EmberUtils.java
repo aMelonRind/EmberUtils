@@ -3,6 +3,7 @@ package io.github.amelonrind.emberutils;
 import io.github.amelonrind.emberutils.config.Config;
 import io.github.amelonrind.emberutils.feature.Notifier;
 import io.github.amelonrind.emberutils.feature.UraniumHud;
+import io.github.amelonrind.emberutils.feature.VisibleBossBar;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -49,6 +50,7 @@ public class EmberUtils implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         Config.HANDLER.load();
+        VisibleBossBar.onConfigChanged();
         Notifier.load();
         ClientTickEvents.END_CLIENT_TICK.register(this::tick);
     }

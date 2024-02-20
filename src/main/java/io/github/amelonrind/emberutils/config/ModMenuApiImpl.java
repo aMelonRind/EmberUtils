@@ -8,6 +8,7 @@ import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import io.github.amelonrind.emberutils.EmberUtils;
 import io.github.amelonrind.emberutils.feature.KeepChat;
+import io.github.amelonrind.emberutils.feature.VisibleBossBar;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -71,7 +72,11 @@ public class ModMenuApiImpl implements ModMenuApi {
                             .option(ListOption.<String>createBuilder()
                                     .name(translatable("visibleBossBarNames"))
                                     .description(descriptionOf("visibleBossBarNames"))
-                                    .binding(Config.HANDLER.defaults().visibleBossBarNames, () -> cfg.visibleBossBarNames, val -> cfg.visibleBossBarNames = val)
+                                    .binding(Config.HANDLER.defaults().visibleBossBarNames, () -> cfg.visibleBossBarNames, val -> {
+                                        cfg.visibleBossBarNames = val;
+                                        VisibleBossBar.onConfigChanged();
+                                    })
+                                    .initial("")
                                     .controller(StringControllerBuilder::create)
                                     .build())
                             .build())
