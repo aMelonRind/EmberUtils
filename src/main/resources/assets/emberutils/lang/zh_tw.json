@@ -47,6 +47,6 @@
   "emberutils.settings.smithingNotification.description": "當工匠物品完成時在聊天欄通知",
   "emberutils.settings.requestsAttention": "請求注意視窗",
   "emberutils.settings.requestsAttention.description": "在通知時也請求注意視窗",
-  "emberutils.settings.uraniumHud": "鈾抬頭顯示器",
-  "emberutils.settings.uraniumHud.description": "新增醒目的抬頭顯示器到螢幕上 避免忘記鈾產線"
+  "emberutils.settings.uraniumHud": "鈾HUD",
+  "emberutils.settings.uraniumHud.description": "新增醒目的HUD 避免忘記鈾產線"
 }
