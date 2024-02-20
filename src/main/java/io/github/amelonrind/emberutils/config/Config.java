@@ -7,6 +7,8 @@ import io.github.amelonrind.emberutils.EmberUtils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
+
 public class Config {
     public static final ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
             .id(new Identifier(EmberUtils.MOD_ID, "main"))
@@ -41,8 +43,19 @@ public class Config {
     @SerialEntry(comment = "Prevents double durability tooltip when the MMOItem has its own.")
     public boolean preventDoubleDurability = true;
 
+    @SerialEntry(comment = "Makes some bossbar visible by changing its style.")
+    public boolean visibleBossbar = true;
+
+    @SerialEntry(comment = "The names for Visible Bossbar to override on.")
+    public List<String> visibleBossbarNames = List.of("不願離去的兔兔");
+
     @SerialEntry(comment = "Reveals runes on MMOItems' tooltip.")
     public boolean gemstoneTooltip = true;
+
+    @SerialEntry(comment = "Memorizes the items needed to do delivery when delivery screen is closed and then show them on hud.")
+    public boolean deliveryHelper = true;
+
+    public int deliveryItemMultiplier = 1;
 
     @SerialEntry(comment = "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D.")
     public boolean keepChat = true;
