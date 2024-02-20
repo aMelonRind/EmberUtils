@@ -44,10 +44,10 @@ public class Config {
     public boolean preventDoubleDurability = true;
 
     @SerialEntry(comment = "Makes some bossbar visible by changing its style.")
-    public boolean visibleBossbar = true;
+    public boolean visibleBossBar = true;
 
-    @SerialEntry(comment = "The names for Visible Bossbar to override on.")
-    public List<String> visibleBossbarNames = List.of("不願離去的兔兔");
+    @SerialEntry(comment = "The names for Visible BossBar to override on.")
+    public List<String> visibleBossBarNames = List.of("不願離去的兔兔");
 
     @SerialEntry(comment = "Reveals runes on MMOItems' tooltip.")
     public boolean gemstoneTooltip = true;
