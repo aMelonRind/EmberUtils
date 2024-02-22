@@ -19,10 +19,10 @@ public class VisibleBossBar {
     private static final Set<Pattern> patterns = new HashSet<>();
     private static Map<UUID, ClientBossBar> bossbars;
 
-    public static void onConfigChanged() {
+    public static void onConfigChanged(Config cfg) {
         strings.clear();
         patterns.clear();
-        for (String str : Config.get().visibleBossBarNames) {
+        for (String str : cfg.visibleBossBarNames) {
             if (str.startsWith("/") && str.endsWith("/")) {
                 try {
                     Pattern pat = Pattern.compile(str.substring(1, str.length() - 1));

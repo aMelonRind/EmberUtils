@@ -4,11 +4,15 @@ import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
+import dev.isxander.yacl3.api.controller.ItemControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import io.github.amelonrind.emberutils.EmberUtils;
+import io.github.amelonrind.emberutils.feature.DeliveryHelper;
 import io.github.amelonrind.emberutils.feature.KeepChat;
 import io.github.amelonrind.emberutils.feature.VisibleBossBar;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -74,7 +78,7 @@ public class ModMenuApiImpl implements ModMenuApi {
                                     .description(descriptionOf("visibleBossBarNames"))
                                     .binding(Config.HANDLER.defaults().visibleBossBarNames, () -> cfg.visibleBossBarNames, val -> {
                                         cfg.visibleBossBarNames = val;
-                                        VisibleBossBar.onConfigChanged();
+                                        VisibleBossBar.onConfigChanged(cfg);
                                     })
                                     .initial("")
                                     .controller(StringControllerBuilder::create)
@@ -83,15 +87,31 @@ public class ModMenuApiImpl implements ModMenuApi {
                     .category(ConfigCategory.createBuilder()
                             .name(translatable("category.utils"))
                             .option(optionOf("gemstoneTooltip", 393, 468, () -> cfg.gemstoneTooltip, val -> cfg.gemstoneTooltip = val))
-                            .option(optionOf("deliveryHelper", () -> cfg.deliveryHelper, val -> cfg.deliveryHelper = val))
+                            .option(optionOf("deliveryHelper", () -> cfg.deliveryHelper, val -> {
+                                cfg.deliveryHelper = val;
+                                DeliveryHelper.onConfigChanged(cfg);
+                            }))
                             .option(Option.<Integer>createBuilder()
                                     .name(translatable("deliveryItemMultiplier"))
                                     .description(descriptionOf("deliveryItemMultiplier"))
-                                    .binding(1, () -> cfg.deliveryItemMultiplier, val -> cfg.deliveryItemMultiplier = val)
+                                    .binding(1, () -> cfg.deliveryItemMultiplier, val -> {
+                                        cfg.deliveryItemMultiplier = val;
+                                        DeliveryHelper.onConfigChanged(cfg);
+                                    })
                                     .controller(opt -> IntegerSliderControllerBuilder.create(opt)
                                             .range(1, 32)
                                             .step(1)
                                             .formatValue(val -> Text.literal(val + "x")))
+                                    .build())
+                            .option(ListOption.<Item>createBuilder()
+                                    .name(translatable("deliveryBlacklist"))
+                                    .description(descriptionOf("deliveryBlacklist"))
+                                    .binding(Config.HANDLER.defaults().deliveryBlacklist, () -> cfg.deliveryBlacklist, val -> {
+                                        cfg.deliveryBlacklist = val;
+                                        DeliveryHelper.onConfigChanged(cfg);
+                                    })
+                                    .initial(Items.AIR)
+                                    .controller(ItemControllerBuilder::create)
                                     .build())
                             .option(optionOf("keepChat", () -> cfg.keepChat, val -> {
                                 KeepChat.isClearingChatWithF3D = false;

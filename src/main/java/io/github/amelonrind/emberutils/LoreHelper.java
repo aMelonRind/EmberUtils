@@ -9,7 +9,10 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LoreHelper {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class LoreHelper implements Iterable<Text> {
     private static final LoreHelper EMPTY = new LoreHelper(new NbtList()) {
         @Override
         public MutableText get(int index) {
@@ -64,6 +67,40 @@ public class LoreHelper {
     public boolean startsWith(int index, String prefix) {
         Text text = get(index);
         return text != null && text.getString().startsWith(prefix);
+    }
+
+    @NotNull
+    @Override
+    public Iterator<Text> iterator() {
+        return new LoreIterator();
+    }
+
+    class LoreIterator implements Iterator<Text> {
+        private static final Text EMPTY = Text.empty();
+        Text next = EMPTY;
+        int index = 0;
+
+        LoreIterator() {
+            next();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return next != null;
+        }
+
+        @Override
+        public Text next() {
+            if (next == null) throw new NoSuchElementException();
+            Text prev = next;
+            next = null;
+            while (next == null) {
+                if (index >= size) break;
+                next = get(index++);
+            }
+            return prev;
+        }
+
     }
 
 }

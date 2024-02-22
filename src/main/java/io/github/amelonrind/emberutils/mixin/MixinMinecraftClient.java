@@ -1,8 +1,9 @@
 package io.github.amelonrind.emberutils.mixin;
 
+import io.github.amelonrind.emberutils.EmberUtils;
+import io.github.amelonrind.emberutils.feature.DeliveryHelper;
 import io.github.amelonrind.emberutils.feature.FactoryNotifier;
 import io.github.amelonrind.emberutils.feature.SmithingNotifier;
-import io.github.amelonrind.emberutils.feature.UraniumHud;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
@@ -23,11 +24,14 @@ public class MixinMinecraftClient {
 
     @Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;", opcode = Opcodes.PUTFIELD), method = "setScreen")
     public void onOpenScreen(Screen screen, CallbackInfo info) {
+        DeliveryHelper.onOpenScreen(screen);
         if (screen != currentScreen && currentScreen instanceof GenericContainerScreen s) {
             GenericContainerScreenHandler h = s.getScreenHandler();
             int rows = h.getRows();
             if (rows == 5) {
-                FactoryNotifier.onCloseGui(s.getTitle().getString(), h);
+                String title = s.getTitle().getString();
+                FactoryNotifier.onCloseGui(title, h);
+                DeliveryHelper.onCloseGui(title, h);
             } else if (rows == 6) {
                 SmithingNotifier.onCloseGui(s.getTitle().getString(), h, screen == null);
             }
@@ -36,7 +40,7 @@ public class MixinMinecraftClient {
 
     @Inject(at = @At("TAIL"), method = "onResolutionChanged")
     public void onResolutionChanged(CallbackInfo info) {
-        UraniumHud.check(System.currentTimeMillis());
+        EmberUtils.onResolutionChanged();
     }
 
 }

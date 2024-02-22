@@ -31,7 +31,7 @@ public class FactoryNotifier {
             if (product == null || !product.startsWith("產品: ")) break;
             product = product.substring("產品: ".length());
             int index = product.indexOf("x ");
-            if (index != -1) product = product.substring(index + 2);
+            if (index != -1) product = product.substring(index + "x ".length());
 
             Text timeText = lore.get(-1);
             if (timeText == null) break;

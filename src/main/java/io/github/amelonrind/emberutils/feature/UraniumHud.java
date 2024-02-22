@@ -21,16 +21,18 @@ public class UraniumHud {
     private static int x = 0;
     private static int y = 0;
     private static int color = 0xFFFFFF;
-    private static long lastHalfSecs = 0;
+    private static long halfSecs = 0L;
 
     static {
         item.setSubNbt("CustomModelData", NbtInt.of(39));
     }
 
-    public static void tick(long now) {
-        long halfSec = now / 500;
-        if (lastHalfSecs == halfSec) return;
-        lastHalfSecs = halfSec;
+    public static void halfSec(long now, long halfSecs) {
+        UraniumHud.halfSecs = halfSecs;
+        check(now);
+    }
+
+    public static void onResolutionChanged(long now) {
         check(now);
     }
 
@@ -43,13 +45,13 @@ public class UraniumHud {
         if (ongoings.containsKey(uranium)) {
             renderMethod = UraniumHud::renderCountdown;
             text = Text.literal(EmberUtils.toDurationString((int) (ongoings.get(uranium) - now) / 1000));
-            x = (mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(text) + 20) / 2;
+            x = (EmberUtils.screenWidth - mc.textRenderer.getWidth(text) + 20) / 2;
         } else {
             renderMethod = UraniumHud::renderNotify;
             text = checkText;
-            color = (lastHalfSecs & 1) == 0 ? 0xFF0000 : 0xAA0000;
-            x = mc.getWindow().getScaledWidth() / 2;
-            y = mc.getWindow().getScaledHeight() / 2 - 24;
+            color = (halfSecs & 1) == 0 ? 0xFF0000 : 0xAA0000;
+            x = EmberUtils.screenWidth / 2;
+            y = EmberUtils.screenHeight / 2 - 24;
         }
     }
 

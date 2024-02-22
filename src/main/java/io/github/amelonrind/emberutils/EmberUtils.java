@@ -1,12 +1,15 @@
 package io.github.amelonrind.emberutils;
 
 import io.github.amelonrind.emberutils.config.Config;
+import io.github.amelonrind.emberutils.feature.DeliveryHelper;
 import io.github.amelonrind.emberutils.feature.Notifier;
 import io.github.amelonrind.emberutils.feature.UraniumHud;
 import io.github.amelonrind.emberutils.feature.VisibleBossBar;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.Window;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
@@ -50,15 +53,48 @@ public class EmberUtils implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         Config.HANDLER.load();
-        VisibleBossBar.onConfigChanged();
+        Config cfg = Config.get();
+        VisibleBossBar.onConfigChanged(cfg);
+        DeliveryHelper.onConfigChanged(cfg);
         Notifier.load();
         ClientTickEvents.END_CLIENT_TICK.register(this::tick);
     }
 
+    private static long lastHalfSecs = 0;
     private void tick(MinecraftClient mc) {
         long now = System.currentTimeMillis();
         Notifier.tick(now);
-        UraniumHud.tick(now);
+        DeliveryHelper.tick();
+
+        long halfSec = now / 500;
+        if (lastHalfSecs != halfSec) {
+            lastHalfSecs = halfSec;
+            halfSec(now);
+        }
+    }
+
+    private void halfSec(long now) {
+        UraniumHud.halfSec(now, lastHalfSecs);
+        DeliveryHelper.halfSec(lastHalfSecs);
+    }
+
+    public static int screenWidth = 720;
+    public static int screenHeight = 480;
+    public static int guiScale = 2;
+    public static void onResolutionChanged() {
+        Window w = mc.getWindow();
+        screenWidth = w.getScaledWidth();
+        screenHeight = w.getHeight();
+        guiScale = mc.options.getGuiScale().getValue();
+
+        long now = System.currentTimeMillis();
+        UraniumHud.onResolutionChanged(now);
+        DeliveryHelper.onResolutionChanged();
+    }
+
+    public static void render(DrawContext context, float ignoredTickDelta) {
+        UraniumHud.render(context);
+        DeliveryHelper.render(context);
     }
 
     public static boolean isNpc(@NotNull Entity entity) {
@@ -97,8 +133,11 @@ public class EmberUtils implements ClientModInitializer {
     }
 
     public static String toDurationString(int seconds) {
-        String res = seconds < 0 ? "-" : "";
-        if (seconds < 0) seconds = -seconds;
+        String res;
+        if (seconds < 0) {
+            res = "-";
+            seconds = -seconds;
+        } else res = "";
         if (seconds >= 60 * 60) {
             if (seconds >= 24 * 60 * 60) {
                 res += seconds / 60 / 60 / 24 + "d";

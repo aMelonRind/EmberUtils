@@ -5,6 +5,8 @@ import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import io.github.amelonrind.emberutils.EmberUtils;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -55,7 +57,11 @@ public class Config {
     @SerialEntry(comment = "Memorizes the items needed to do delivery when delivery screen is closed and then show them on hud.")
     public boolean deliveryHelper = true;
 
+    @SerialEntry
     public int deliveryItemMultiplier = 1;
+
+    @SerialEntry(comment = "Blacklisted items for Delivery Helper.")
+    public List<Item> deliveryBlacklist = List.of(Items.DIAMOND_HORSE_ARMOR);
 
     @SerialEntry(comment = "Keeps chat even if switched server or disconnected. You can still clear chat with F3+D.")
     public boolean keepChat = true;
