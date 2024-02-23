@@ -84,7 +84,7 @@ public class EmberUtils implements ClientModInitializer {
     public static void onResolutionChanged() {
         Window w = mc.getWindow();
         screenWidth = w.getScaledWidth();
-        screenHeight = w.getHeight();
+        screenHeight = w.getScaledHeight();
         guiScale = mc.options.getGuiScale().getValue();
 
         long now = System.currentTimeMillis();

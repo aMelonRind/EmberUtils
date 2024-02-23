@@ -154,10 +154,12 @@ public class DeliveryHelper {
     }
 
     public static void onResolutionChanged() {
-        idScale = 1.0f / EmberUtils.guiScale;
-        h = EmberUtils.screenHeight / 3;
+        idScale = (float) Math.ceil(EmberUtils.guiScale / 2.0f) / EmberUtils.guiScale;
+        hAnchor = EmberUtils.screenHeight / 3;
+        if (!current.isEmpty()) updateH();
     }
 
+    static int hAnchor = 69;
     static int h = 69;
     static int multiplier = 1;
     static int x2Cache = 0;
@@ -258,7 +260,16 @@ public class DeliveryHelper {
                 + 4
                 + current.stream().mapToInt(d -> d.rewards.length * 12 + d.items.size() * 20).max().orElse(0)
                 + 10;
+        updateH();
         shouldUpdateCountdown = true;
+    }
+
+    private static void updateH() {
+        if (hAnchor + y2Cache > EmberUtils.screenHeight) {
+            h = Math.max(8, EmberUtils.screenHeight - y2Cache);
+        } else {
+            h = hAnchor;
+        }
     }
 
     @Contract(pure = true)
