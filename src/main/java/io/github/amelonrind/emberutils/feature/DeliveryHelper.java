@@ -49,8 +49,9 @@ public class DeliveryHelper {
             "閃電", 60000
     );
 
-    @SuppressWarnings("unused")
     public static boolean disableGuiCheck = false;
+    public static boolean debugEnabled = false;
+    public static List<ItemStack> debugItems = new ArrayList<>();
     private static List<Delivery> current = new ArrayList<>();
     private static ItemRecord duplicates = new ItemRecord();
     private static ItemRecord items = new ItemRecord();
@@ -107,6 +108,7 @@ public class DeliveryHelper {
                 msg.append(item.getName().getString());
                 for (Text text : LoreHelper.from(item)) msg.append("\n").append(text.getString());
                 EmberUtils.LOGGER.warn(msg.toString());
+                if (debugEnabled) debugItems.add(item);
                 continue;
             }
             if (!hasIllegalTime) {
