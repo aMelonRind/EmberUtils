@@ -73,13 +73,14 @@ public class ModMenuApiImpl implements ModMenuApi {
                             .option(optionOf("trailingTooltipFix", () -> cfg.trailingTooltipFix, val -> cfg.trailingTooltipFix = val))
                             .option(optionOf("preventDoubleDurability", () -> cfg.preventDoubleDurability, val -> cfg.preventDoubleDurability = val))
                             .option(optionOf("visibleBossBar", () -> cfg.visibleBossBar, val -> cfg.visibleBossBar = val))
-                            .option(ListOption.<String>createBuilder()
+                            .group(ListOption.<String>createBuilder()
                                     .name(translatable("visibleBossBarNames"))
                                     .description(descriptionOf("visibleBossBarNames"))
                                     .binding(Config.HANDLER.defaults().visibleBossBarNames, () -> cfg.visibleBossBarNames, val -> {
                                         cfg.visibleBossBarNames = val;
                                         VisibleBossBar.onConfigChanged(cfg);
                                     })
+//                                    .collapsed(true) // i guess we need this only if we have too many options
                                     .initial("")
                                     .controller(StringControllerBuilder::create)
                                     .build())
@@ -103,7 +104,7 @@ public class ModMenuApiImpl implements ModMenuApi {
                                             .step(1)
                                             .formatValue(val -> Text.literal(val + "x")))
                                     .build())
-                            .option(ListOption.<Item>createBuilder()
+                            .group(ListOption.<Item>createBuilder()
                                     .name(translatable("deliveryBlacklist"))
                                     .description(descriptionOf("deliveryBlacklist"))
                                     .binding(Config.HANDLER.defaults().deliveryBlacklist, () -> cfg.deliveryBlacklist, val -> {
