@@ -23,7 +23,7 @@ public class VisibleBossBar {
         strings.clear();
         patterns.clear();
         for (String str : cfg.visibleBossBarNames) {
-            if (str.startsWith("/") && str.endsWith("/")) {
+            if (str.startsWith("/") && str.endsWith("/") && !str.equals("/")) {
                 try {
                     Pattern pat = Pattern.compile(str.substring(1, str.length() - 1));
                     patterns.add(pat);
