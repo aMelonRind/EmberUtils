@@ -40,6 +40,10 @@ public class SmithingNotifier {
         if (lastNpcName == null || !lastNpc.isAlive() || !TITLE.equals(title) || mc.player.distanceTo(lastNpc) > 24) return;
         long now = System.currentTimeMillis();
         List<Long> times = new ArrayList<>(5);
+        String days = null;
+        String hours = null;
+        String minutes = null;
+        String seconds = null;
         for (int s : slots) {
             Slot slot = handler.getSlot(s);
             if (!slot.hasStack()) break;
@@ -56,7 +60,11 @@ public class SmithingNotifier {
             if (timeText == null) break;
             Matcher matcher = timePattern.matcher(timeText.getString());
             if (!matcher.matches()) break;
-            int time = EmberUtils.parseDuration(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
+            if (matcher.group(1) != null) days = matcher.group(1);
+            if (matcher.group(2) != null) hours = matcher.group(2);
+            if (matcher.group(3) != null) minutes = matcher.group(3);
+            if (matcher.group(4) != null) seconds = matcher.group(4);
+            int time = EmberUtils.parseDuration(days, hours, minutes, seconds);
             times.add(time <= 0 ? 0L : now + time + 1000);
         }
         var ongoings = Notifier.instance().smiths;
